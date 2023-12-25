@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   axios.defaults.baseURL='http://localhost:4040';
+  axios.defaults.baseURL='https://chat-back-r65u.onrender.com';
   axios.defaults.withCredentials=true;
 
   return (
