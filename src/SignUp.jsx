@@ -18,8 +18,7 @@ const SignUp = ({ setIsLoggedIn }) => {
   const [pass, setpass] = useState(false);
   const [pass1, setpass1] = useState(false);
 
-  // const baseUrl="http://localhost:4040"
-  const baseUrl="https://chat-back-r65u.onrender.com"
+  const baseUrl="http://localhost:4040"
 
   async function submitHandler(event) {
     console.log("data submit");
@@ -29,8 +28,8 @@ const SignUp = ({ setIsLoggedIn }) => {
       return;
     }
     try {
-      console.log("api fetching..");
-      const url = isLoginRegister === `${baseUrl}/register` ? 'register' : `${baseUrl}/login`;
+      console.log("api fetching..",isLoginRegister);
+      const url = isLoginRegister === 'register'?`${baseUrl}/register` : `${baseUrl}/login`;
       console.log("check url " + url);
       const { data } = await axios.post(url, { username, password, email });
 

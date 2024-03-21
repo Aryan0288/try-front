@@ -70,7 +70,7 @@ export default function Chat() {
 
     // Handle the send files
     async function sendMessage(ev, file = null) {
-        
+
         if (ev) ev.preventDefault();
 
         ws.send(JSON.stringify({
@@ -121,17 +121,17 @@ export default function Chat() {
         const currentUserId = selectedUserId;
         console.log("deleted");
     }
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         console.log("I am in useEffect getfetch");
         getFetch();
-    },[sendMessage]);
-    
-    
+    }, [sendMessage]);
+
+
     const handleDelete = async (mess) => {
-        
+
         try {
-            
+
             setMessagesId(mess._id);
             console.log(messages.length);
             const filteredPeople = messages.filter((item) => item._id !== mess._id);
@@ -185,6 +185,26 @@ export default function Chat() {
     const onlinePeopleExclOurUser = { ...onlinePeople };
     delete onlinePeopleExclOurUser[id];
     const messagesWithoutDupes = uniqBy(messages, '_id');
+
+    const [dropdownVisible, setDropdownVisible] = useState(false);
+
+    // Function to toggle the dropdown visibility
+    const toggleDropdown = () => {
+        setDropdownVisible(!dropdownVisible);
+    };
+
+    // Function to handle delete action
+    const handleDeleteOption = (action) => {
+        if (action === 'deleteForMe') {
+            console.log('Deleting for me...');
+        } else if (action === 'deleteEveryone') {
+            console.log('Deleting for everyone...');
+        }
+
+        // Additional logic for actual deletion can be added here
+        // For simplicity, we're just logging messages to the console.
+    };
+
     return (
         <div className='h-screen flex'>
 
@@ -249,10 +269,28 @@ export default function Chat() {
 
                                 {messagesWithoutDupes.map(message => (
                                     <div key={message._id} className={(message.sender === id ? 'text-right' : 'text-left')}>
-                                        <div className={"inline-block text-[13px] py-1  px-4 my-3 rounded-md text-sm cursor-text " + (message.sender === id ? 'bg-blue-600 max-w-[64%] text-white' : 'bg-gray-700 text-white mb-2')}
+                                        <div className={"relative inline-block text-[13px] py-1  px-4 my-3 rounded-md text-sm cursor-text " + (message.sender === id ? 'bg-blue-600 max-w-[64%] text-white' : 'bg-gray-700 text-white mb-2')}
                                         >
-                                            <div className='flex py-[6x]  items-center justify-center text-left'>
-                                                <span className='cursor-pointer text-black ' onClick={() => handleDelete(message)}>delete</span>
+                                            <div className=' flex py-[6x]  items-center justify-center text-left'>
+                                                <div className="dropdown-container">
+                                                    <button onClick={toggleDropdown} className="absolute top-0 right-0 dropdown-button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                                        </svg>
+
+                                                    </button>
+
+                                                    {/* The dropdown */}
+                                                    {dropdownVisible && (
+                                                        message.sender===id && (
+                                                        <div className="absolute -top-6 right-0 dropdown flex flex-col">
+                                                            <button onClick={() => handleDeleteOption('deleteForMe')}>Delete for me</button>
+                                                            <button onClick={() => handleDeleteOption('deleteEveryone')}>Delete for everyone</button>
+                                                        </div>)
+                                                    )}
+                                                </div>
+
+
                                                 {message.text}
                                             </div>
                                             <div>
@@ -300,6 +338,6 @@ export default function Chat() {
                 )}
 
             </div>
-        </div>
+        </div >
     )
 }
