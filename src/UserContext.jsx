@@ -11,7 +11,12 @@ export function UserContextProvider({ children }) {
 
     useEffect(() => {
         axios.get('./profile').then(response => {
-            setId(response.data.userId);
+            // console.log("fetch profile : ",response);
+            // console.log("id : ",response.data.id);
+            // console.log("username : ",response.data.username);
+            // console.log("email : ",response.data.email);
+
+            setId(response.data.id);
             setUsername(response.data.username);
             setEmail(response.data.email);
         });

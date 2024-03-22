@@ -6,6 +6,8 @@ import axios from 'axios'
 
 import { UserContext } from './UserContext';
 import Contact from './Contact';
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
 
 export default function Chat() {
     const [ws, setWs] = useState(null);
@@ -18,6 +20,7 @@ export default function Chat() {
 
     const messagesBoxRef = useRef();
     const { username, id, setId, setUsername } = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         connectToWs();
@@ -26,7 +29,6 @@ export default function Chat() {
 
     function connectToWs() {
         const ws = new WebSocket('ws://localhost:4040');
-        // const ws = new WebSocket('ws://chat-back-r65u.onrender.com');
         setWs(ws);
         ws.addEventListener('message', handleMessage);
         ws.addEventListener('close', () => {
@@ -60,12 +62,21 @@ export default function Chat() {
     }
 
     function logout() {
-        axios.post('/logout').then(() => {
-            setWs(null);
-            setId(null);
-            setUsername(null);
-        })
-        console.log("Logout");
+        try {
+            axios.post('/logout').then(() => {
+                setWs(null);
+                setId(null);
+                setUsername(null);
+            })
+            toast.success(`Successfully Logout`, {
+                position: "top-center"
+            });
+            console.log("Logout");
+            navigate("/Login");
+        } catch (err) {
+            console.log("error during logout ", err.message);
+            return res.status(500).json({ status: false, message: err.message });
+        }
     }
 
     // Handle the send files
@@ -88,7 +99,7 @@ export default function Chat() {
         }]));
 
         if (file) {
-            axios.get('/messages/' + selectedUserId).then(res => {
+            await axios.get('/messages/' + selectedUserId).then(res => {
                 setMessages(res.data);
             })
         } else {
@@ -117,15 +128,17 @@ export default function Chat() {
     }
 
     async function getFetch() {
-        console.log("I am in fetch fnc");
+        // console.log("I am in fetch fnc");
         const currentUserId = selectedUserId;
-        console.log("deleted");
+        // console.log("deleted");
     }
 
     useEffect(() => {
-        console.log("I am in useEffect getfetch");
+        // console.log("I am in useEffect getfetch");
         getFetch();
     }, [sendMessage]);
+
+   
 
 
     const handleDelete = async (mess) => {
@@ -133,7 +146,7 @@ export default function Chat() {
         try {
 
             setMessagesId(mess._id);
-            console.log(messages.length);
+            // console.log(messages.length);
             const filteredPeople = messages.filter((item) => item._id !== mess._id);
             setMessages(filteredPeople);
             // sendMessage(null,null);
@@ -175,12 +188,13 @@ export default function Chat() {
 
     useEffect(() => {
         if (selectedUserId) {
+            console.log("selectedUserId : ", selectedUserId)
             axios.get('/messages/' + selectedUserId).then(res => {
-                // console.log("data is here " + res.data + " <-")
+                console.log("data is here " + res.data + " ")
                 setMessages(res.data);
             })
         }
-    }, [selectedUserId])
+    }, [selectedUserId]) 
 
     const onlinePeopleExclOurUser = { ...onlinePeople };
     delete onlinePeopleExclOurUser[id];
@@ -272,33 +286,18 @@ export default function Chat() {
                                         <div className={"relative inline-block text-[13px] py-1  px-4 my-3 rounded-md text-sm cursor-text " + (message.sender === id ? 'bg-blue-600 max-w-[64%] text-white' : 'bg-gray-700 text-white mb-2')}
                                         >
                                             <div className=' flex py-[6x]  items-center justify-center text-left'>
-                                                <div className="dropdown-container">
-                                                    <button onClick={toggleDropdown} className="absolute top-0 right-0 dropdown-button">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                                        </svg>
-
-                                                    </button>
-
-                                                    {/* The dropdown */}
-                                                    {dropdownVisible && (
-                                                        message.sender===id && (
-                                                        <div className="absolute -top-6 right-0 dropdown flex flex-col">
-                                                            <button onClick={() => handleDeleteOption('deleteForMe')}>Delete for me</button>
-                                                            <button onClick={() => handleDeleteOption('deleteEveryone')}>Delete for everyone</button>
-                                                        </div>)
-                                                    )}
-                                                </div>
-
-
                                                 {message.text}
                                             </div>
+                                            <div className='h-[3px]'></div>
                                             <div>
                                                 {
                                                     message.file && (
                                                         <div>
-                                                            <a target="_blank" className='flex items-center justify-center ' href={axios.defaults.baseURL + '/uploads/' + message.file}>
-                                                                {message.file}
+                                                            <a target="_blank" className='flex items-center justify-center text-[15px] font-medium pb-[2px] ' href={axios.defaults.baseURL + '/uploads/' + message.file}>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                                                </svg> &nbsp;
+                                                                {message.file} 
                                                             </a>
                                                         </div>
                                                     )

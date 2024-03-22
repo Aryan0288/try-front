@@ -4,24 +4,23 @@ import { UserContextProvider } from './UserContext';
 import Routes from './Routes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BrowserRouter } from 'react-router-dom'
 
 function App() {
-  axios.defaults.baseURL='http://localhost:4040';
-  // axios.defaults.baseURL="https://chat-back-r65u.onrender.com"
-  // axios.defaults.baseURL = process.env.NODE_ENV === 'development'
-  // ? 'http://localhost:4040'
-  // : 'https://chat-back-r65u.onrender.com'
-  
-  axios.defaults.withCredentials=true;
+  axios.defaults.baseURL = 'http://localhost:4040';
+
+  axios.defaults.withCredentials = true;
 
   return (
     <div className=''>
-    <UserContextProvider>
-      <Routes/>
-      <ToastContainer />
-    </UserContextProvider>
+      <BrowserRouter>
+        <UserContextProvider>
+          <Routes />
+          <ToastContainer />
+        </UserContextProvider>
+      </BrowserRouter>
     </div>
-    
+
   );
 }
 

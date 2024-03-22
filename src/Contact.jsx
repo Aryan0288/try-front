@@ -1,7 +1,8 @@
 import React from 'react'
 import Avatar from './Avatar'
 export default function Contact({id,username,onClick,selected,online}) {
-    // console.log("this is contact");
+    // console.log("this is contact username",username);
+    // console.log("this is contact id",id);
     
     return (
         <div key={id} onClick={() => onClick(id)}
