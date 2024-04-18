@@ -12,7 +12,8 @@ const SignUp = ({ setIsLoggedIn }) => {
     const [password, setPassword] = useState('');
     const { setUsername: setLoggedInUsername, setId, setEmail: setLoggedEmail } = useContext(UserContext);
 
-
+    const [pass, setpass] = useState(false);
+    // base url backened
     const baseUrl = "http://localhost:4040"
 
     async function submitHandler(event) {
@@ -20,12 +21,13 @@ const SignUp = ({ setIsLoggedIn }) => {
         event.preventDefault();
         try {
             const url = `${baseUrl}/login`;
-            // console.log("check url " + url);
+
             const { data } = await axios.post(url, { username, password });
 
             console.log("data in login page : ", data.message);
-            // setLoggedInUsername(data.foundUser.username);
-            setId(data.id);
+            console.log("data in login page : ", data);
+            setLoggedInUsername(data.foundUser.username);
+            setId(data.foundUser._id);
             setLoggedEmail(data.foundUser.email);
             toast.success(`${data.message}`, {
                 position: "top-center"
@@ -76,7 +78,7 @@ const SignUp = ({ setIsLoggedIn }) => {
                             <p>Create Password <sup className='text-red-500 text-[14px] font-bold'>*</sup></p>
                             <input
                                 className='p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
-                                type="password"
+                                type={pass ? ('text') : ('password')}
                                 name='password'
                                 value={password}
                                 placeholder='Enter Your Password'
@@ -86,7 +88,7 @@ const SignUp = ({ setIsLoggedIn }) => {
                             />
                             <span className='absolute right-2 text-[22px] top-10 cursor-pointer'
                                 onClick={() => setpass((prev) => !prev)}>
-                                {password ? (<AiOutlineEyeInvisible />) : (<AiOutlineEye />)}
+                                {pass ? (<AiOutlineEyeInvisible />) : (<AiOutlineEye />)}
                             </span>
                         </label>
                     </div>

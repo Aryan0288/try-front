@@ -138,7 +138,7 @@ export default function Chat() {
         getFetch();
     }, [sendMessage]);
 
-   
+
 
 
     const handleDelete = async (mess) => {
@@ -194,10 +194,26 @@ export default function Chat() {
                 setMessages(res.data);
             })
         }
-    }, [selectedUserId]) 
+    }, [selectedUserId])
 
     const onlinePeopleExclOurUser = { ...onlinePeople };
+    // useEffect(()=>{
+    // console.log("user ",onlinePeopleExclOurUser);
+    //     deleteMe();
+    // },[]);
+    // function deleteMe(){
+    // for(let i=0;i<4;i++){ 
     delete onlinePeopleExclOurUser[id];
+    // }
+
+    // }
+
+    // const onlinePeopleExclOurUser = Object.fromEntries(
+    //     Object.entries(onlinePeople).filter(([key, value]) => key !== id)
+    // );
+    console.log("all user ", onlinePeopleExclOurUser);
+    console.log("## id ", id);
+
     const messagesWithoutDupes = uniqBy(messages, '_id');
 
     const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -229,7 +245,7 @@ export default function Chat() {
                 <div className='flex-grow'>
                     <Logo />
                     {
-                        Object.keys(onlinePeopleExclOurUser).map(userId => (
+                        Object.keys(onlinePeopleExclOurUser).filter((e) => e !== id).map(userId => (
                             <Contact
 
                                 key={userId}
@@ -256,15 +272,22 @@ export default function Chat() {
                         ))
                     }
                 </div>
-                <div onClick={logout} className='flex items-center justify-center p-2'>
-                    <div className=''>
+                <div className='flex items-center justify-center p-2'>
+                    <div className='flex items-center gap-1 cursor-pointer mr-2 capitalize font-mono text-2xl font-bold'>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+
                         {username}
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 p-2 cursor-pointer bg-gray-200">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
-                    </svg>
+                    <div onClick={logout} className='flex'>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 p-2 cursor-pointer bg-gray-200">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
+                        </svg>
 
-                    <button className='text-md  text-gray-600 font-medium bg-gray-200 p-2'>Sign out</button>
+                        <button title='SignOut' className='text-md  text-gray-600 font-medium bg-gray-200 p-2 pr-3'>Sign out</button>
+
+                    </div>
                 </div>
             </div>
 
@@ -297,7 +320,7 @@ export default function Chat() {
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                                                                 </svg> &nbsp;
-                                                                {message.file} 
+                                                                {message.file}
                                                             </a>
                                                         </div>
                                                     )
