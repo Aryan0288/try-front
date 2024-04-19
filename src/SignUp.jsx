@@ -238,21 +238,23 @@ import { toast } from 'react-toastify'
 import TypedText from './TypeText';
 import {  useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+// import dotenv from 'dotenv'
+// dotenv.config();
+
 
 const SignUp = ({ setIsLoggedIn }) => {
   const navigation=useNavigate();
-  const [username, setUsername] = useState('');
+  const [username, setName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [confirmPassword, setconfirmPassword] = useState('');
-  const { setUsername: setLoggedInUsername, setId, setEmail: setLoggedEmail } = useContext(UserContext);
+  const { setOneTimePass,setUsername, setId, setEmail: setLoggedEmail } = useContext(UserContext);
 
 
 
   const [pass, setpass] = useState(false);
   const [pass1, setpass1] = useState(false);
 
-  const baseUrl = "http://localhost:4040"
 
   async function submitHandler(event) {
     console.log("data submit");
@@ -262,22 +264,19 @@ const SignUp = ({ setIsLoggedIn }) => {
       return;
     }
     try {
-     
-      const url = `${baseUrl}/register`;
-      // console.log("check url " + url);
-      const { data } = await axios.post(url, { username, password, email });
+      // first remove not verify user from the database
+      await axios.delete("/notverifyDeleted");
+      // then signUp the new User
+      const { data } = await axios.post("/register", { username, password, email });
 
-      setLoggedInUsername(data.otp);
+      toast.info(`Verify Email Address`);
+
+      setOneTimePass(data.otp);
       setLoggedEmail(email);
-      // toast.success(`Successfully SignUp`, {
-      //   position: "top-center"
-      // });
       navigation("/otpVerification"); 
 
-      // setId(data.id);
-      // console.log(email + " " + username + " " + password);
     }
-    catch (err) {
+    catch (err) { 
       console.log("i am in err" + err);
       if (err.response && err.response.status === 400) {
 
@@ -293,9 +292,9 @@ const SignUp = ({ setIsLoggedIn }) => {
 
 
   return (
-    <div className='flex w-full h-screen bg-[#000814]'>
+    <div className='flex md:flex-row flex-col w-full h-screen bg-[#000814]'>
       <form method='post' onSubmit={submitHandler} className='flex flex-col gap-5 w-full text-white text-[18px]'>
-        <div className='flex flex-col gap-3 w-8/12 mx-auto mt-[4rem]'>
+        <div className='flex flex-col gap-3 sm:w-8/12 w-10/12 mx-auto mt-[4rem]'>
           <div className='text-3xl mb-[5rem] text-yellow-400'>
             <TypedText />
           </div>
@@ -308,7 +307,7 @@ const SignUp = ({ setIsLoggedIn }) => {
                 required
                 type='text'
                 name='username'
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
                 placeholder='UserName'
                 value={username}
                 autoComplete='new-name'
@@ -335,7 +334,7 @@ const SignUp = ({ setIsLoggedIn }) => {
 
           </div>
 
-          <div className='flex gap-4'>
+          <div className='flex sm:flex-row flex-col gap-4'>
             <label className='w-full relative'>
               <p>Create Password <sup className='text-red-500 text-[14px] font-bold'>*</sup></p>
               <input
@@ -397,7 +396,7 @@ const SignUp = ({ setIsLoggedIn }) => {
 
         </div>
       </form>
-      <div className=''>
+      <div className='max-md:hidden'>
         <img className='h-full  bg-cover' src='https://assets-global.website-files.com/5ee715da7b6fbc3bf68c6bfe/64918c2270e6f03c6d5ae3b2_tutorial_building-a-jetpack-compose-chat-app.jpg' />
       </div>
 

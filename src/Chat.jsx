@@ -28,7 +28,10 @@ export default function Chat() {
     }, [selectedUserId])
 
     function connectToWs() {
-        const ws = new WebSocket('ws://localhost:4040');
+        // const ws = new WebSocket('ws://localhost:4040');
+        // const ws = new WebSocket('https://chat-back-ier8.onrender.com');
+        const ws = new WebSocket('wss://chat-back-ier8.onrender.com');
+
         setWs(ws);
         ws.addEventListener('message', handleMessage);
         ws.addEventListener('close', () => {
@@ -68,10 +71,7 @@ export default function Chat() {
                 setId(null);
                 setUsername(null);
             })
-            toast.success(`Successfully Logout`, {
-                position: "top-center"
-            });
-            console.log("Logout");
+            toast.success(`Successfully Logout`);
             navigate("/Login");
         } catch (err) {
             console.log("error during logout ", err.message);
@@ -197,20 +197,9 @@ export default function Chat() {
     }, [selectedUserId])
 
     const onlinePeopleExclOurUser = { ...onlinePeople };
-    // useEffect(()=>{
-    // console.log("user ",onlinePeopleExclOurUser);
-    //     deleteMe();
-    // },[]);
-    // function deleteMe(){
-    // for(let i=0;i<4;i++){ 
+
     delete onlinePeopleExclOurUser[id];
-    // }
 
-    // }
-
-    // const onlinePeopleExclOurUser = Object.fromEntries(
-    //     Object.entries(onlinePeople).filter(([key, value]) => key !== id)
-    // );
     console.log("all user ", onlinePeopleExclOurUser);
     console.log("## id ", id);
 
@@ -236,7 +225,7 @@ export default function Chat() {
     };
 
     return (
-        <div className='h-screen flex'>
+        <div className='md:h-screen h-screen flex w-screen'>
 
             <div className="bg-blue-200 w-1/3 flex flex-col justify-between">
 
@@ -272,30 +261,33 @@ export default function Chat() {
                         ))
                     }
                 </div>
-                <div className='flex items-center justify-center p-2'>
-                    <div className='flex items-center gap-1 cursor-pointer mr-2 capitalize font-mono text-2xl font-bold'>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                        </svg>
-
-                        {username}
+                <div className='flex md:flex-row flex-col items-center justify-center p-2'>
+                    <div className='flex  items-center gap-1 cursor-pointer mr-2 capitalize font-mono text-2xl font-bold'>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+                        </div>
+                        <div className=''>
+                            {username}
+                        </div>
                     </div>
                     <div onClick={logout} className='flex'>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 p-2 cursor-pointer bg-gray-200">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
                         </svg>
 
-                        <button title='SignOut' className='text-md  text-gray-600 font-medium bg-gray-200 p-2 pr-3'>Sign out</button>
+                        <button title='SignOut' className='text-md  text-gray-600 font-medium bg-gray-200 md:p-2 md:pr-3 p-1'>Sign out</button>
 
                     </div>
                 </div>
             </div>
 
 
-            <div className="flex flex-col bg-blue-400 w-2/3">
-                <div className='flex-grow mx-2'>
+            <div className="flex flex-col bg-blue-400 md:w-2/3 ">
+                <div className='flex-grow md:mx-2'>
                     {!selectedUserId && (
-                        <div className='flex h-full flex-grow items-center justify-center'>
+                        <div className='flex h-full flex-grow items-center justify-center w-screen'>
                             <div className='text-gray-800'>&larr; Select a person from sidebar</div>
                         </div>
                     )}
@@ -361,5 +353,6 @@ export default function Chat() {
 
             </div>
         </div >
+        
     )
 }

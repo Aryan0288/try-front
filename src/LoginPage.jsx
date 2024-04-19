@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import TypedText from './TypeText';
 import { Link, useNavigate } from 'react-router-dom';
 
+
 const SignUp = ({ setIsLoggedIn }) => {
     const navigate=useNavigate();
     const [username, setUsername] = useState('');
@@ -13,32 +14,29 @@ const SignUp = ({ setIsLoggedIn }) => {
     const { setUsername: setLoggedInUsername, setId, setEmail: setLoggedEmail } = useContext(UserContext);
 
     const [pass, setpass] = useState(false);
-    // base url backened
-    const baseUrl = "http://localhost:4040"
+
 
     async function submitHandler(event) {
         console.log("login Page");
         event.preventDefault();
         try {
-            const url = `${baseUrl}/login`;
-
-            const { data } = await axios.post(url, { username, password });
+            const { data } = await axios.post("/login", { username, password });
 
             console.log("data in login page : ", data.message);
             console.log("data in login page : ", data);
             setLoggedInUsername(data.foundUser.username);
             setId(data.foundUser._id);
             setLoggedEmail(data.foundUser.email);
+            await axios.delete("/notverifyDeleted");
             toast.success(`${data.message}`, {
                 position: "top-center"
             });
             navigate("/chat");  
         }
         catch (err) {
-            console.log("i am in err " + err.message);
-            if(err.message.includes("404") || err.message.includes("301")){
+            console.log("i am in err " + err);
+            if(err.message.includes(404)){
                 toast.warning('User Notfound');
-                await axios.post(`${baseUrl}/notverifyDeleted`,{username});
                 return;
             }
             toast.warning('Error Occur');
@@ -49,9 +47,9 @@ const SignUp = ({ setIsLoggedIn }) => {
 
 
     return (
-        <div className='flex w-full h-screen bg-[#000814]'>
+        <div className='flex md:flex-row flex-col w-full h-screen bg-[#000814]'>
             <form method='post' onSubmit={submitHandler} className='flex flex-col gap-5 w-full text-white text-[18px]'>
-                <div className='flex flex-col gap-3 w-8/12 mx-auto mt-[4rem]'>
+                <div className='flex flex-col gap-3 sm:w-8/12 w-11/12 mx-auto mt-[4rem]'>
                     <div className='text-3xl mb-[5rem] text-yellow-400'>
                         <TypedText />
                     </div>
@@ -111,7 +109,7 @@ const SignUp = ({ setIsLoggedIn }) => {
                     </div>
                 </div>
             </form>
-            <div className=''>
+            <div className='max-md:hidden'>
                 <img className='h-full  bg-cover' src='https://assets-global.website-files.com/5ee715da7b6fbc3bf68c6bfe/64918c2270e6f03c6d5ae3b2_tutorial_building-a-jetpack-compose-chat-app.jpg' />
             </div>
 

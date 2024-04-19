@@ -7,7 +7,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter } from 'react-router-dom'
 
 function App() {
-  axios.defaults.baseURL = 'http://localhost:4040';
+  // wherever axios is used,this url will be utilized 
+  // axios.defaults.baseURL = 'http://localhost:4040';
+  axios.defaults.baseURL = 'https://chat-back-ier8.onrender.com';
 
   axios.defaults.withCredentials = true;
 

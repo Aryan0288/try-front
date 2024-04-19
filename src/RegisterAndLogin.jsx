@@ -22,25 +22,7 @@ export default function Register() {
     const { setUsername: setLoggedInUsername, setId } = useContext(UserContext);
 
 
-    // async function sumbmitHandler(event) {
-    //     console.log("data submit");
-    //     event.preventDefault();
-    //     try {
-    //         const url = isLoginRegister === 'register' ? 'register' : 'login';
-    //         const { data } = await axios.post(url, { username, password });
-    //         setLoggedInUsername(username);
-    //         setId(data.id);
-    //         toast.success(`Successfully ${url}`);
-    //     }
-    //     catch (err) {
-    //         toast.warning('Error Occur');
-
-    //     }
-
-
-    // }
-
-    console.log("i am register file");
+ 
     return (
         <div className='bg-blue-50 h-screen flex items-center'>
             <form method='post' className='w-64 mx-auto mb-12 ' onSubmit={sumbmitHandler}>
