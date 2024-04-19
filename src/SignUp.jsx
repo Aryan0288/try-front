@@ -294,7 +294,7 @@ const SignUp = ({ setIsLoggedIn }) => {
   return (
     <div className='flex md:flex-row flex-col w-full h-screen bg-[#000814]'>
       <form method='post' onSubmit={submitHandler} className='flex flex-col gap-5 w-full text-white text-[18px]'>
-        <div className='flex flex-col gap-3 sm:w-8/12 w-10/12 mx-auto mt-[4rem]'>
+        <div className='flex flex-col gap-3 xl:w-8/12 w-10/12 mx-auto mt-[4rem]'>
           <div className='text-3xl mb-[5rem] text-yellow-400'>
             <TypedText />
           </div>
@@ -334,7 +334,7 @@ const SignUp = ({ setIsLoggedIn }) => {
 
           </div>
 
-          <div className='flex sm:flex-row flex-col gap-4'>
+          <div className='flex lg:flex-row flex-col gap-4'>
             <label className='w-full relative'>
               <p>Create Password <sup className='text-red-500 text-[14px] font-bold'>*</sup></p>
               <input
