@@ -100,14 +100,6 @@ export default function Chat() {
             file,
         }));
 
-        setNewMessageText('');
-        setMessages(prev => ([...prev, {
-            text: newMessageText,
-            sender: id,
-            recipient: selectedUserId,
-            _id: Date.now(),
-        }]));
-
         if (file) {
             await axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
                 console.log("res data : ",res.data);
@@ -130,12 +122,12 @@ export default function Chat() {
     function sendFile(ev) {
         const reader = new FileReader();
         reader.readAsDataURL(ev.target.files[0]);
-        reader.onload = () => {
+        reader.onloadend = () => {
             sendMessage(null, {
                 name: ev.target.files[0].name,
                 data: reader.result,
-            })
-        }
+            });
+        };
     }
 
     // async function getFetch() {
