@@ -91,8 +91,8 @@ export default function Chat() {
             });
             return;
         }
-        console.log("selected user id : ", selectedUserId);
-        console.log("newMessageText : ", newMessageText);
+        // console.log("selected user id : ", selectedUserId);
+        // console.log("newMessageText : ", newMessageText);
         ws.send(JSON.stringify({
             sender: id,
             recipient: selectedUserId,
@@ -110,6 +110,7 @@ export default function Chat() {
 
         if (file) {
             await axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
+                console.log("res data : ",res.data);
                 setMessages(res.data);
             })
         } else {
@@ -137,15 +138,14 @@ export default function Chat() {
         }
     }
 
-    async function getFetch() {
-        const currentUserId = selectedUserId;
-        // console.log("deleted");
-    }
+    // async function getFetch() {
+    //     const currentUserId = selectedUserId;
+    //     // console.log("deleted");
+    // }
 
-    useEffect(() => {
-        // console.log("I am in useEffect getfetch");
-        getFetch();
-    }, [sendMessage]);
+    // useEffect(() => {
+    //     getFetch();
+    // }, [sendMessage]);
 
 
 
