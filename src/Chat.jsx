@@ -300,7 +300,7 @@ export default function Chat() {
                 <div className='flex-grow md:mx-2'> */}
             <div className={`flex flex-col bg-blue-400 lg:w-2/3 (${!selectedUserId} ? hidden:w-full)`}>
                 <div className='flex-grow lg:mx-2'>
-                    <div className='lg:flex h-full flex-grow items-center justify-center hidden '>
+                    <div className='flex h-full flex-grow items-center justify-center '>
                         {!selectedUserId && (
                             <div className='flex h-full flex-grow items-center justify-center w-screen'>
                                 <div className='text-gray-800'>&larr; Select a person from sidebar</div>
@@ -310,7 +310,7 @@ export default function Chat() {
 
                     {!!selectedUserId && (
                         <div className='relative h-full max-md:w-screen'>
-                            <div className='overflow-y-scroll absolute inset-0 ml-4 pt-12 pr-5'>
+                            <div className='overflow-y-scroll absolute inset-0 ml-4 max-sm:pt-12 pr-5'>
 
                                 <div className='sm:hidden items-center flex justify-between z-50  bg-blue-800 fixed top-0 left-0 right-0 bottom-0 h-10'>
                                     <button onClick={backClick} className=" font-mono font-semibold text-white text-left pl-4 ">
