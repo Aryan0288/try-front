@@ -20,25 +20,25 @@ const SignUp = ({ setIsLoggedIn }) => {
         console.log("login Page");
         event.preventDefault();
         try {
-            // localStorage.removeItem("token");
-            // const { data } = await axios.post("/login", { username, password });
-            // console.log("data: ",data);
-            // const storeLocalStorage={
-            //     username:data.foundUser.username,
-            //     id:data.foundUser._id,
-            //     email:data.foundUser.email,
-            // }
-            // localStorage.setItem("token",JSON.stringify(storeLocalStorage));
+            localStorage.removeItem("token");
+            const { data } = await axios.post("/login", { username, password });
+            console.log("data: ",data);
+            const storeLocalStorage={
+                username:data.foundUser.username,
+                id:data.foundUser._id,
+                email:data.foundUser.email,
+            }
+            localStorage.setItem("token",JSON.stringify(storeLocalStorage));
 
-            // setLoggedInUsername(data.foundUser.username);
-            // setId(data.foundUser._id);
-            // setLoggedEmail(data.foundUser.email);
+            setLoggedInUsername(data.foundUser.username);
+            setId(data.foundUser._id);
+            setLoggedEmail(data.foundUser.email);
 
-            // await axios.delete("/notverifyDeleted");
+            await axios.delete("/notverifyDeleted");
 
-            // toast.success(`${data.message}`, {
-            //     position: "top-center"
-            // });
+            toast.success(`${data.message}`, {
+                position: "top-center"
+            });
             navigate("/chat");  
         }
         catch (err) {
