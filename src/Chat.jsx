@@ -89,12 +89,12 @@ export default function Chat() {
             toast.warning("Can't send empty message", {
                 position: "bottom-center"
             });
+            console.log("empty message");
             return;
         }
         // console.log("selected user id : ", selectedUserId);
         // console.log("newMessageText : ", newMessageText);
         ws.send(JSON.stringify({
-            sender: id,
             recipient: selectedUserId,
             text: newMessageText,
             file,
