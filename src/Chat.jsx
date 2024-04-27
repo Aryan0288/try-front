@@ -300,13 +300,13 @@ export default function Chat() {
                 <div className='flex-grow md:mx-2'> */}
             <div className={`flex flex-col bg-blue-400 lg:w-2/3 (${!selectedUserId} ? hidden:w-full)`}>
                 <div className='flex-grow lg:mx-2'>
-                    <div className='flex h-full flex-grow items-center justify-center '>
+                    {/* <div className='flex h-full flex-grow items-center justify-center'> */}
                         {!selectedUserId && (
-                            <div className='flex h-full flex-grow items-center justify-center w-screen'>
+                            <div className='flex h-full flex-grow items-center justify-center w-screen max-md:hidden'>
                                 <div className='text-gray-800'>&larr; Select a person from sidebar</div>
                             </div>
                         )}
-                    </div>
+                    {/* </div> */}
 
                     {!!selectedUserId && (
                         <div className='relative h-full max-md:w-screen'>
