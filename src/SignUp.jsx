@@ -272,6 +272,7 @@ const SignUp = ({ setIsLoggedIn }) => {
       toast.info(`Verify Email Address`);
 
       setOneTimePass(data.otp);
+      console.log("data otp :",data.otp);
       setLoggedEmail(email);
       navigation("/otpVerification"); 
 

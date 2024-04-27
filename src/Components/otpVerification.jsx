@@ -13,7 +13,7 @@ export default (props) => {
     const { oneTimePass,username, email } = useContext(UserContext);
     const navigate = useNavigate();
 
-    const baseUrl = "http://localhost:4040"
+    const baseUrl = "https://try-backend-k7qt.onrender.com"
     const url = `${baseUrl}/verify`
     const handleSubmit = async () => {
         if (otp.length == 0) {
