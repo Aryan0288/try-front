@@ -30,7 +30,7 @@ export default function Chat() {
     function connectToWs() {
         // const ws = new WebSocket('ws://localhost:4000');
         // const ws = new WebSocket('https://chat-back-ier8.onrender.com');
-        const ws = new WebSocket('wss://chat-back-ier8.onrender.com');
+        const ws = new WebSocket('wss://try-backend-k7qt.onrender.com');
 
         setWs(ws);
         ws.addEventListener('message', handleMessage);
