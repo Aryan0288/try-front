@@ -312,7 +312,7 @@ export default function Chat() {
                         <div className='relative h-full max-md:w-screen'>
                             <div className='overflow-y-scroll absolute inset-0 ml-4 pt-12 pr-5'>
 
-                                <div className='items-center flex justify-between  bg-blue-800 fixed top-0 left-0 right-0 bottom-0 h-10'>
+                                <div className='items-center flex justify-between z-50  bg-blue-800 fixed top-0 left-0 right-0 bottom-0 h-10'>
                                     <button onClick={backClick} className=" font-mono font-semibold text-white text-left pl-4 ">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
