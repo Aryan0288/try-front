@@ -6,7 +6,7 @@ export default function Contact({id,username,onClick,selected,online}) {
     
     return (
         <div key={id} onClick={() => onClick(id)}
-            className={'border-b border-gray-100  flex items-center gap-2 cursor-pointer ' + (selected ? 'bg-blue-400' : '')}>
+            className={'border-b border-gray-100 pt-2 pb-2 flex items-center gap-2 cursor-pointer ' + (selected ? 'bg-blue-400' : '')}>
             {selected && (
                 <div className='w-1 h-14 rounded-md bg-blue-500'></div>
             )}

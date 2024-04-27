@@ -26,7 +26,7 @@ export default function Chat() {
         connectToWs();
         console.log("this is ws connector");
     }, [selectedUserId])
-   
+
     function connectToWs() {
         // const ws = new WebSocket('ws://localhost:4000');
         // const ws = new WebSocket('https://chat-back-ier8.onrender.com');
@@ -56,7 +56,7 @@ export default function Chat() {
     function handleMessage(ev) {
         const messageData = JSON.parse(ev.data);
         if ('online' in messageData) {
-            console.log("messageData : ",messageData.online);
+            console.log("messageData : ", messageData.online);
             ShowOnlinePeople(messageData.online);
         } else if ('text' in messageData) {
             if (messageData.sender === selectedUserId) {
@@ -85,10 +85,10 @@ export default function Chat() {
     async function sendMessage(ev, file = null) {
 
         if (ev) ev.preventDefault();
-        console.log("selected user id : ",selectedUserId);
-        console.log("newMessageText : ",newMessageText);
+        console.log("selected user id : ", selectedUserId);
+        console.log("newMessageText : ", newMessageText);
         ws.send(JSON.stringify({
-            sender:id,
+            sender: id,
             recipient: selectedUserId,
             text: newMessageText,
             file,
@@ -103,7 +103,7 @@ export default function Chat() {
         }]));
 
         if (file) {
-            await axios.get('/messages/' + selectedUserId+"/"+id).then(res => {
+            await axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
                 setMessages(res.data);
             })
         } else {
@@ -152,7 +152,7 @@ export default function Chat() {
             // console.log(messages.length);
             const filteredPeople = messages.filter((item) => item._id !== mess._id);
             setMessages(filteredPeople);
-            
+
             const response = await axios.delete(`/messages/${mess._id}`);
         } catch (error) {
             console.error(error);
@@ -192,7 +192,7 @@ export default function Chat() {
     useEffect(() => {
         if (selectedUserId) {
             console.log("selectedUserId : ", selectedUserId)
-            axios.get('/messages/' + selectedUserId+"/"+id).then(res => {
+            axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
                 // console.log("data is here ", res)
                 setMessages(res.data);
             })
@@ -228,12 +228,10 @@ export default function Chat() {
     };
 
     return (
-        <div className='md:h-screen h-screen flex w-screen'>
-
-            <div className="bg-blue-200 w-1/3 flex flex-col justify-between">
-
-
-
+        // <div className='md:h-screen h-screen flex w-screen'>
+        //     <div className="bg-blue-200 w-1/3 flex flex-col justify-between">
+        <div className='h-screen flex overflow-hidden'>
+            <div className={`bg-blue-200 lg:w-1/3 w-screen flex flex-col justify-between overflow-hidden`}>
                 <div className='flex-grow'>
                     <Logo />
                     {
@@ -264,39 +262,42 @@ export default function Chat() {
                         ))
                     }
                 </div>
-                <div className='flex md:flex-row flex-col items-center justify-center p-2'>
+                <div className='flex md:flex-row flex-col items-center justify-center lg:p-2'>
                     <div className='flex  items-center gap-1 cursor-pointer mr-2 capitalize font-mono text-2xl font-bold'>
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
                         </div>
-                        <div className=''>
+                        <div className='font-mono font-bold text-xl pr-1 capitalize'>
                             {username}
                         </div>
                     </div>
-                    <div onClick={logout} className='flex'>
+                    <div onClick={logout} className='flex bg-yellow-500 items-center justify-center'>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 p-2 cursor-pointer bg-gray-200">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
                         </svg>
-
-                        <button title='SignOut' className='text-md  text-gray-600 font-medium bg-gray-200 md:p-2 md:pr-3 p-1'>Sign out</button>
+                        <button title='SignOut' className='text-md text-black font-bold lg:p-2'>Sign out &nbsp;</button>
 
                     </div>
                 </div>
             </div>
 
 
-            <div className="flex flex-col bg-blue-400 md:w-2/3 ">
-                <div className='flex-grow md:mx-2'>
-                    {!selectedUserId && (
-                        <div className='flex h-full flex-grow items-center justify-center w-screen'>
-                            <div className='text-gray-800'>&larr; Select a person from sidebar</div>
-                        </div>
-                    )}
+            {/* <div className="flex flex-col bg-blue-400 md:w-2/3 ">
+                <div className='flex-grow md:mx-2'> */}
+            <div className={`flex flex-col bg-blue-400 lg:w-2/3 (${!selectedUserId} ? hidden:w-full)`}>
+                <div className='flex-grow lg:mx-2'>
+                    <div className='lg:flex h-full flex-grow items-center justify-center hidden '>
+                        {!selectedUserId && (
+                            <div className='flex h-full flex-grow items-center justify-center w-screen'>
+                                <div className='text-gray-800'>&larr; Select a person from sidebar</div>
+                            </div>
+                        )}
+                    </div>
 
                     {!!selectedUserId && (
-                        <div className='relative h-full'>
+                        <div className='relative h-full max-md:w-screen'>
                             <div className='overflow-y-scroll absolute inset-0 ml-4 pr-5'>
 
                                 {messagesWithoutDupes.map(message => (
@@ -356,6 +357,6 @@ export default function Chat() {
 
             </div>
         </div >
-        
+
     )
 }
