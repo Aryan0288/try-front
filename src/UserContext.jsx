@@ -15,15 +15,15 @@ export function UserContextProvider({ children }) {
     // profile fetch function
     const fetchProfile = async () => {
         try { 
-            const response = await axios.get("/profile");
-            console.log("fetch profile : ", response);
-            console.log("id : ", response.data.id);
-            console.log("username : ", response.data.username);
-            console.log("email : ", response.data.email);   
+            const res=localStorage.getItem("token");
+            const response=JSON.parse(res);
+            console.log("id : ", response.id);
+            console.log("username : ", response.username);
+            console.log("email : ", response.email);    
 
-            setId(response.data.id);
-            setUsername(response.data.username);
-            setEmail(response.data.email);
+            setId(response.id);
+            setUsername(response.username);
+            setEmail(response.email);
             return;
         } catch (err) {
             console.log("error Occur during fetch profile data : ", err.message);

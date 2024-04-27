@@ -8,8 +8,8 @@ import { BrowserRouter } from 'react-router-dom'
 
 function App() {
   // wherever axios is used,this url will be utilized 
-  // axios.defaults.baseURL = 'http://localhost:4040';
-  axios.defaults.baseURL = 'https://chat-back-ier8.onrender.com';
+  axios.defaults.baseURL = 'http://localhost:4000';
+  // axios.defaults.baseURL = 'https://chat-back-ier8.onrender.com';
 
   axios.defaults.withCredentials = true;
 

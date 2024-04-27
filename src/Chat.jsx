@@ -26,11 +26,11 @@ export default function Chat() {
         connectToWs();
         console.log("this is ws connector");
     }, [selectedUserId])
-
+   
     function connectToWs() {
-        // const ws = new WebSocket('ws://localhost:4040');
+        const ws = new WebSocket('ws://localhost:4000');
         // const ws = new WebSocket('https://chat-back-ier8.onrender.com');
-        const ws = new WebSocket('wss://chat-back-ier8.onrender.com');
+        // const ws = new WebSocket('wss://chat-back-ier8.onrender.com');
 
         setWs(ws);
         ws.addEventListener('message', handleMessage);
@@ -56,6 +56,7 @@ export default function Chat() {
     function handleMessage(ev) {
         const messageData = JSON.parse(ev.data);
         if ('online' in messageData) {
+            console.log("messageData : ",messageData.online);
             ShowOnlinePeople(messageData.online);
         } else if ('text' in messageData) {
             if (messageData.sender === selectedUserId) {
@@ -71,6 +72,7 @@ export default function Chat() {
                 setId(null);
                 setUsername(null);
             })
+            localStorage.removeItem("token");
             toast.success(`Successfully Logout`);
             navigate("/Login");
         } catch (err) {
@@ -83,8 +85,10 @@ export default function Chat() {
     async function sendMessage(ev, file = null) {
 
         if (ev) ev.preventDefault();
-
+        console.log("selected user id : ",selectedUserId);
+        console.log("newMessageText : ",newMessageText);
         ws.send(JSON.stringify({
+            sender:id,
             recipient: selectedUserId,
             text: newMessageText,
             file,
@@ -99,7 +103,7 @@ export default function Chat() {
         }]));
 
         if (file) {
-            await axios.get('/messages/' + selectedUserId).then(res => {
+            await axios.get('/messages/' + selectedUserId+"/"+id).then(res => {
                 setMessages(res.data);
             })
         } else {
@@ -128,7 +132,6 @@ export default function Chat() {
     }
 
     async function getFetch() {
-        // console.log("I am in fetch fnc");
         const currentUserId = selectedUserId;
         // console.log("deleted");
     }
@@ -149,7 +152,7 @@ export default function Chat() {
             // console.log(messages.length);
             const filteredPeople = messages.filter((item) => item._id !== mess._id);
             setMessages(filteredPeople);
-            // sendMessage(null,null);
+            
             const response = await axios.delete(`/messages/${mess._id}`);
         } catch (error) {
             console.error(error);
@@ -189,8 +192,8 @@ export default function Chat() {
     useEffect(() => {
         if (selectedUserId) {
             console.log("selectedUserId : ", selectedUserId)
-            axios.get('/messages/' + selectedUserId).then(res => {
-                console.log("data is here " + res.data + " ")
+            axios.get('/messages/' + selectedUserId+"/"+id).then(res => {
+                // console.log("data is here ", res)
                 setMessages(res.data);
             })
         }
