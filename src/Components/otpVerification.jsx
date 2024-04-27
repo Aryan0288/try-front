@@ -20,10 +20,6 @@ export default (props) => {
             toast.warning("Enter Otp");
             return;
         }
-        if (otp.length !== 6) {
-            toast.warning("Enter Valid Otp!");
-            return;
-        }
         if (otp == oneTimePass) {
             const response = await axios.post(url, { email });
             toast.success("User Created Successfully", {
