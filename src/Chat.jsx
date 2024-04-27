@@ -85,7 +85,7 @@ export default function Chat() {
     async function sendMessage(ev, file = null) {
 
         if (ev) ev.preventDefault();
-        if (newMessageText.trim().length == 0) {
+        if (file==null && newMessageText.trim().length == 0) {
             toast.warning("Can't send empty message", {
                 position: "bottom-center"
             });
