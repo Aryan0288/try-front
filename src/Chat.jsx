@@ -85,7 +85,7 @@ export default function Chat() {
     async function sendMessage(ev, file = null) {
 
         if (ev) ev.preventDefault();
-        if (file==null && newMessageText.trim().length == 0) {
+        if (file == null && newMessageText.trim().length == 0) {
             toast.warning("Can't send empty message", {
                 position: "bottom-center"
             });
@@ -102,7 +102,7 @@ export default function Chat() {
 
         if (file) {
             await axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
-                console.log("res data : ",res.data);
+                console.log("res data : ", res.data);
                 setMessages(res.data);
             })
         } else {
@@ -228,6 +228,28 @@ export default function Chat() {
     function backClick() {
         setSelectedUserId(null);
     }
+    function getMessageTimeDuration(updatedAt) {
+        const updatedAtDate = new Date(updatedAt);
+        const currentTime = new Date();
+        const timeDifference = currentTime - updatedAtDate;
+        const timeDifferenceInSeconds = Math.floor(timeDifference / 1000);
+        const MINUTE = 60;
+        const HOUR = 60 * MINUTE;
+        const DAY = 24 * HOUR;
+
+        if (timeDifferenceInSeconds < MINUTE) {
+            return `${timeDifferenceInSeconds}s ago`;
+        } else if (timeDifferenceInSeconds < HOUR) {
+            const minutes = Math.floor(timeDifferenceInSeconds / MINUTE);
+            return `${minutes}m ago`;
+        } else if (timeDifferenceInSeconds < DAY) {
+            const hours = Math.floor(timeDifferenceInSeconds / HOUR);
+            return `${hours}h ago`;
+        } else {
+            const days = Math.floor(timeDifferenceInSeconds / DAY);
+            return `${days}d ago`;
+        }
+    }
 
     return (
         // <div className='md:h-screen h-screen flex w-screen'>
@@ -293,11 +315,11 @@ export default function Chat() {
             <div className={`flex flex-col bg-blue-400 lg:w-2/3 (${!selectedUserId} ? hidden:w-full)`}>
                 <div className='flex-grow lg:mx-2'>
                     {/* <div className='flex h-full flex-grow items-center justify-center'> */}
-                        {!selectedUserId && (
-                            <div className='flex h-full flex-grow items-center justify-center w-screen max-md:hidden'>
-                                <div className='text-gray-800'>&larr; Select a person from sidebar</div>
-                            </div>
-                        )}
+                    {!selectedUserId && (
+                        <div className='flex h-full flex-grow items-center justify-center w-screen max-md:hidden'>
+                            <div className='text-gray-800'>&larr; Select a person from sidebar</div>
+                        </div>
+                    )}
                     {/* </div> */}
 
                     {!!selectedUserId && (
@@ -315,11 +337,9 @@ export default function Chat() {
 
                                 {messagesWithoutDupes.map(message => (
                                     <div key={message._id} className={(message.sender === id ? 'text-right' : 'text-left')}>
-                                        <div className={"relative inline-block text-[13px] py-1  px-4 my-3 rounded-md text-sm cursor-text " + (message.sender === id ? 'bg-blue-600 max-w-[64%] text-white' : 'bg-gray-700 text-white mb-2')}
+                                        <div className={"font-mono font-medium relative inline-block py-3  px-6 my-4 rounded-3xl text-[16px] cursor-text p-4 hover:bg-secondary order-1 rounded-br-none bg-primary " + (message.sender === id ? 'bg-blue-600 max-w-[64%] text-white' : 'bg-gray-700 text-white mb-2')}
                                         >
-                                            <div className=' flex py-[6x]  items-center justify-center text-left'>
-                                                {message.text}
-                                            </div>
+                                            {message.text}
                                             <div className='h-[3px]'></div>
                                             <div>
                                                 {
@@ -335,6 +355,7 @@ export default function Chat() {
                                                     )
                                                 }
                                             </div>
+                                            <div className='text-[10px] text-zinc-50 font-medium font-serif'>{getMessageTimeDuration(message.updatedAt)}</div>
                                         </div>
                                     </div>
                                 ))}
