@@ -276,6 +276,7 @@ const SignUp = ({ setIsLoggedIn }) => {
       // setLoggedEmail(email);
       let otp=data.otp;
       let email=email;
+      console.log("email ",email);
       localStorage.setItem("temp",JSON.stringify({otp,email}));
       navigation("/otpVerification"); 
 
