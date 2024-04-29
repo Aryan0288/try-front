@@ -56,7 +56,7 @@ export default function Chat() {
     function handleMessage(ev) {
         const messageData = JSON.parse(ev.data);
         if ('online' in messageData) {
-            console.log("messageData : ", messageData.online);
+            // console.log("messageData : ", messageData.online);
             ShowOnlinePeople(messageData.online);
         } else if ('text' in messageData) {
             if (messageData.sender === selectedUserId) {
@@ -92,8 +92,6 @@ export default function Chat() {
             console.log("empty message");
             return;
         }
-        // console.log("selected user id : ", selectedUserId);
-        // console.log("newMessageText : ", newMessageText);
         ws.send(JSON.stringify({
             recipient: selectedUserId,
             text: newMessageText,
@@ -129,16 +127,6 @@ export default function Chat() {
             });
         };
     }
-
-    // async function getFetch() {
-    //     const currentUserId = selectedUserId;
-    //     // console.log("deleted");
-    // }
-
-    // useEffect(() => {
-    //     getFetch();
-    // }, [sendMessage]);
-
 
 
 
@@ -189,7 +177,6 @@ export default function Chat() {
 
     useEffect(() => {
         if (selectedUserId) {
-            console.log("selectedUserId : ", selectedUserId)
             axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
                 // console.log("data is here ", res)
                 setMessages(res.data);
@@ -201,8 +188,7 @@ export default function Chat() {
 
     delete onlinePeopleExclOurUser[id];
 
-    console.log("all user ", onlinePeopleExclOurUser);
-    console.log("## id ", id);
+
 
     const messagesWithoutDupes = uniqBy(messages, '_id');
 
