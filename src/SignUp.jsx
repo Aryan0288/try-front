@@ -267,6 +267,9 @@ const SignUp = ({ setIsLoggedIn }) => {
       // first remove not verify user from the database
       await axios.delete("/notverifyDeleted");
       // then signUp the new User
+      console.log("email ",email);
+      console.log("pass ",username);
+      console.log("user ",password);
       const { data } = await axios.post("/register", { username, password, email });
 
       toast.info(`Verify Email Address`);
