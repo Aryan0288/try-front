@@ -13,18 +13,21 @@ export default (props) => {
     const { oneTimePass,username, email } = useContext(UserContext);
     const navigate = useNavigate();
 
-    const baseUrl = "https://try-backend-k7qt.onrender.com"
-    const url = `${baseUrl}/verify`
+    // const baseUrl = "https://try-backend-k7qt.onrender.com"
+    // const url = `${baseUrl}/verify`
     const handleSubmit = async () => {
+        let dataLs=JSON.parse(localStorage.getItem("temp"));
         if (otp.length == 0) {
             toast.warning("Enter Otp");
             return;
         }
-        if (otp == oneTimePass) {
-            const response = await axios.post(url, { email });
+        if (otp == dataLs.otp) {
+            let email=dataLs.email;
+            const response = await axios.post("verify", { email });
             toast.success("User Created Successfully", {
                 position: "top-center",
             });
+            localStorage.removeItem("temp");
             navigate("/Login");
         }
         else {
