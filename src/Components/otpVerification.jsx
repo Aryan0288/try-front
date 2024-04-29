@@ -10,20 +10,43 @@ export default (props) => {
     let [otp, setOtp] = useState("");
     let [error, setError] = useState("");
     // const { setUsername: setLoggedInUsername, setId, setEmail: setLoggedEmail } = useContext(UserContext);
-    const { oneTimePass,username, email } = useContext(UserContext);
+    const { oneTimePass, username, email } = useContext(UserContext);
     const navigate = useNavigate();
 
     // const baseUrl = "https://try-backend-k7qt.onrender.com"
     // const url = `${baseUrl}/verify`
     const handleSubmit = async () => {
-        let dataLs=JSON.parse(localStorage.getItem("temp"));
+        // let dataLs=JSON.parse(localStorage.getItem("temp"));
+        // if (otp.length == 0) {
+        //     toast.warning("Enter Otp");
+        //     return;
+        // }
+        // if (otp == dataLs.otp) {
+        //     let email=dataLs.email;
+        //     const response = await axios.post("verify", { email });
+        //     toast.success("User Created Successfully", {
+        //         position: "top-center",
+        //     });
+        //     localStorage.removeItem("temp");
+        //     navigate("/Login");
+        // }
+        // else {
+        //     toast.error("Enter Valid Otp");
+        //     console.log("error in otpVerification")
+        // }
+
+        const otpData = JSON.parse(localStorage.getItem("temp"));
         if (otp.length == 0) {
             toast.warning("Enter Otp");
             return;
         }
-        if (otp == dataLs.otp) {
-            let email=dataLs.email;
-            const response = await axios.post("verify", { email });
+        if (otp.length !== 6) {
+            toast.warning("Enter Valid Otp!");
+            return;
+        }
+        if (otp == otpData.otpLs) {
+            let emailLs = otpData.email;
+            const response = await axios.post("/verify", { emailLs });
             toast.success("User Created Successfully", {
                 position: "top-center",
             });
@@ -36,7 +59,7 @@ export default (props) => {
         }
     };
 
-    console.log(otp);
+    // console.log(otp);
 
 
     return (

@@ -264,25 +264,38 @@ const SignUp = ({ setIsLoggedIn }) => {
       return;
     }
     try {
-      // first remove not verify user from the database
-      await axios.delete("/notverifyDeleted");
-      // then signUp the new User
-      console.log("email ",email);
-      console.log("pass ",username);
-      console.log("user ",password);
-      const { data } = await axios.post("/register", { username, password, email });
+      // // first remove not verify user from the database
+      // await axios.delete("/notverifyDeleted");
+      // // then signUp the new User
+      // console.log("email ",email);
+      // console.log("pass ",username);
+      // console.log("user ",password);
+      // const { data } = await axios.post("/register", { username, password, email });
 
-      toast.info(`Verify Email Address`);
+      // toast.info(`Verify Email Address`);
 
-      // setOneTimePass(data.otp);
-      // console.log("data otp :",data.otp);
-      // setLoggedEmail(email);
-      let otp=data.otp;
-      let email=email;
-      console.log("email ",email);
-      localStorage.setItem("temp",JSON.stringify({otp,email}));
-      navigation("/otpVerification"); 
-
+      // // setOneTimePass(data.otp);
+      // // console.log("data otp :",data.otp);
+      // // setLoggedEmail(email);
+      // let otp=data.otp;
+      // let email=email;
+      // console.log("email ",email);
+      // localStorage.setItem("temp",JSON.stringify({otp,email}));
+      // navigation("/otpVerification"); 
+      
+       // first remove not verify user from the database
+       await axios.delete("/notverifyDeleted");
+       // then signUp the new User
+       toast.info(`Verify Email Address`);
+       const { data } = await axios.post("/register", { username, password, email });
+ 
+ 
+       setOneTimePass(data.otp);
+       setLoggedEmail(email);
+       let otpLs=data.otp;
+       localStorage.setItem("temp",JSON.stringify({otpLs,email}));
+       navigation("/otpVerification"); 
+       
     }
     catch (err) { 
       console.log("i am in err" + err);
