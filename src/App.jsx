@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom'
 function App() {
   // wherever axios is used,this url will be utilized 
   // axios.defaults.baseURL = 'http://localhost:4000';
-  axios.defaults.baseURL = 'https://try-backend-k7qt.onrender.com';
+  axios.defaults.baseURL = 'https://try-backend-ouni.onrender.com';
 
   axios.defaults.withCredentials = true;
 
