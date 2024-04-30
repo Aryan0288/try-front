@@ -272,7 +272,7 @@ export default function Chat() {
                         ))
                     }
                 </div>
-                <div className='flex flex-row items-center justify-center lg:p-2'>
+                <div className='flex flex-row items-center justify-center lg:p-2 pb-3'>
                     <div className='flex items-center gap-1 cursor-pointer mr-2 capitalize font-mono text-2xl font-bold'>
 
 
@@ -353,7 +353,7 @@ export default function Chat() {
 
 
                 {!!selectedUserId && (
-                    <form onSubmit={sendMessage} className='flex items-center gap-2 mx-2 p-2'>
+                    <form onSubmit={sendMessage} className='flex items-center gap-2 mx-2 p-2 pb-2'>
                         <input type='text'
                             value={newMessageText}
                             onChange={ev => setNewMessageText(ev.target.value)}

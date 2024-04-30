@@ -46,7 +46,7 @@ export default (props) => {
         }
         if (otp == otpData.otpLs) {
             let emailLs = otpData.email;
-            const response = await axios.post("/verify", { emailLs });
+            const response = await axios.put("/verify", { emailLs });
             toast.success("User Created Successfully", {
                 position: "top-center",
             });

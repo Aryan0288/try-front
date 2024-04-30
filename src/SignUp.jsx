@@ -284,7 +284,7 @@ const SignUp = ({ setIsLoggedIn }) => {
       // navigation("/otpVerification"); 
       
        // first remove not verify user from the database
-       await axios.delete("/notverifyDeleted");
+      //  await axios.delete("/notverifyDeleted");
        // then signUp the new User
        toast.info(`Verify Email Address`);
        const { data } = await axios.post("/register", { username, password, email });
