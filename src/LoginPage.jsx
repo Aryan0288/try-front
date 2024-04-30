@@ -67,7 +67,7 @@ const SignUp = ({ setIsLoggedIn }) => {
             setLoggedInUsername(data.foundUser.username);
             setId(data.foundUser._id);
             setLoggedEmail(data.foundUser.email);
-            await axios.delete("/notverifyDeleted");
+          
             toast.success(`${data.message}`, {
                 position: "top-center"
             });
