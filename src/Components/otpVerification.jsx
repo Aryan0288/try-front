@@ -40,11 +40,7 @@ export default (props) => {
             toast.warning("Enter Otp");
             return;
         }
-        if (otp.length !== 6) {
-            toast.warning("Enter Valid Otp!");
-            return;
-        }
-        if (otp == otpData.otpLs) {
+        else if (otp == otpData.otpLs) {
             let emailLs = otpData.email;
             const response = await axios.put("/verify", { emailLs });
             toast.success("User Created Successfully", {

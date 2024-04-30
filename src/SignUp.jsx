@@ -290,8 +290,8 @@ const SignUp = ({ setIsLoggedIn }) => {
        const { data } = await axios.post("/register", { username, password, email });
  
  
-       setOneTimePass(data.otp);
-       setLoggedEmail(email);
+      //  setOneTimePass(data.otp);
+      //  setLoggedEmail(email);
        let otpLs=data.otp;
        localStorage.setItem("temp",JSON.stringify({otpLs,email}));
        navigation("/otpVerification"); 
