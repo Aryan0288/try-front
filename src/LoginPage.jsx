@@ -22,13 +22,13 @@ const SignUp = ({ setIsLoggedIn }) => {
         try {
             localStorage.removeItem("token");
             const { data } = await axios.post("/login", { username, password });
-            console.log("data: ", data);
-            const storeLocalStorage = {
-                username: data.foundUser.username,
-                id: data.foundUser._id,
-                email: data.foundUser.email,
+            console.log("data: ",data);
+            const storeLocalStorage={
+                username:data.foundUser.username,
+                id:data.foundUser._id,
+                email:data.foundUser.email,
             }
-            localStorage.setItem("token", JSON.stringify(storeLocalStorage));
+            localStorage.setItem("token",JSON.stringify(storeLocalStorage));
 
             setLoggedInUsername(data.foundUser.username);
             setId(data.foundUser._id);
@@ -37,17 +37,14 @@ const SignUp = ({ setIsLoggedIn }) => {
             toast.success(`${data.message}`, {
                 position: "top-center"
             });
-            navigate("/chat");
+            navigate("/chat");  
         }
         catch (err) {
-            console.log("i am in err in login page " + err.message);
-            if (err.message.includes("401")) {
+            console.log("i am in err " + err);
+            if(err.message.includes("401")){
                 toast.warning('User Notfound');
                 return;
-            }else if(err.message.includes("402")){
-                toast.warning('Invalid Password');
-                return;
-            } else {
+            }else{
                 toast.warning('Try After sometime');
                 return;
             }
@@ -55,36 +52,6 @@ const SignUp = ({ setIsLoggedIn }) => {
             return;
         }
     }
-
-    async function submitHandler(event) {
-        console.log("login Page");
-        event.preventDefault();
-        try {
-            const { data } = await axios.post("/login", { username, password });
-
-            console.log("data in login page : ", data.message);
-            console.log("data in login page : ", data);
-            
-            setLoggedInUsername(data.foundUser.username);
-            setId(data.foundUser._id);
-            setLoggedEmail(data.foundUser.email);
-          
-            toast.success(`${data.message}`, {
-                position: "top-center"
-            });
-            navigate("/chat");
-        }
-        catch (err) {
-            console.log("i am in err " + err);
-            if (err.message.includes(404)) {
-                toast.warning('User Notfound');
-                return;
-            }
-            toast.warning('Error Occur');
-            return;
-        }
-    }
-
 
 
 
