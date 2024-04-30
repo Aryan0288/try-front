@@ -277,7 +277,7 @@ const SignUp = ({ setIsLoggedIn }) => {
         password,
         username
       }
-
+      
       localStorage.setItem("temp", JSON.stringify(LsData));
       navigation("/otpVerification");
 

@@ -40,9 +40,12 @@ const SignUp = ({ setIsLoggedIn }) => {
             navigate("/chat");
         }
         catch (err) {
-            console.log("i am in err " + err);
+            console.log("i am in err in login page " + err.message);
             if (err.message.includes("401")) {
                 toast.warning('User Notfound');
+                return;
+            }else if(err.message.includes("402")){
+                toast.warning('Invalid Password');
                 return;
             } else {
                 toast.warning('Try After sometime');
