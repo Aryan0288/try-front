@@ -264,14 +264,14 @@ const SignUp = ({ setIsLoggedIn }) => {
       toast.warning('Password Doesnot Match');
       return;
     }
-    let response;
+   
     try {
 
       // then signUp the new User
 
-      response = await axios.post("/sendotp", { email });
+      let response = await axios.post("/sendotp", { email });
       toast.info(`Verify Email Address`);
-      // const { data } = await axios.post("/register", { username, password, email });
+      console.log("response of sendotp ",response);
       const LsData = {
         email,
         password,
@@ -283,7 +283,7 @@ const SignUp = ({ setIsLoggedIn }) => {
 
     }
     catch (err) {
-      console.log("err ", err.message, response);
+      console.log("err ", err.message);
       if (err.message.includes("401")) {
         toast.error("User Already Exist");
       } else {
