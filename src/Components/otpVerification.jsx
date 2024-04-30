@@ -13,68 +13,32 @@ export default (props) => {
     const { oneTimePass, username, email } = useContext(UserContext);
     const navigate = useNavigate();
 
-    const baseUrl = "https://try-backend-k7qt.onrender.com"
-    const url = `${baseUrl}/verify`
-    // const handleSubmit = async () => {
-    //     // let dataLs=JSON.parse(localStorage.getItem("temp"));
-    //     // if (otp.length == 0) {
-    //     //     toast.warning("Enter Otp");
-    //     //     return;
-    //     // }
-    //     // if (otp == dataLs.otp) {
-    //     //     let email=dataLs.email;
-    //     //     const response = await axios.post("verify", { email });
-    //     //     toast.success("User Created Successfully", {
-    //     //         position: "top-center",
-    //     //     });
-    //     //     localStorage.removeItem("temp");
-    //     //     navigate("/Login");
-    //     // }
-    //     // else {
-    //     //     toast.error("Enter Valid Otp");
-    //     //     console.log("error in otpVerification")
-    //     // }
-
-    //     const otpData = JSON.parse(localStorage.getItem("temp"));
-    //     if (otp.length == 0) {
-    //         toast.warning("Enter Otp");
-    //         return;
-    //     }
-    //     else if (otp == otpData.otpLs) {
-    //         let emailLs = otpData.email;
-    //         const response = await axios.put("/verify", { emailLs });
-    //         toast.success("User Created Successfully", {
-    //             position: "top-center",
-    //         });
-    //         localStorage.removeItem("temp");
-    //         navigate("/Login");
-    //     }
-    //     else {
-    //         toast.error("Enter Valid Otp");
-    //         console.log("error in otpVerification")
-    //     }
-    // };
-
     const handleSubmit = async () => {
-        if (otp.length == 0) {
-            toast.warning("Enter Otp");
-            return;
-        }
-        if (otp.length !== 6) {
-            toast.warning("Enter Valid Otp!");
-            return;
-        }
-        if (otp == oneTimePass) {
-            const response = await axios.post(url, { email });
+        try {
+            const LsData = JSON.parse(localStorage.getItem("temp"));
+            console.log('otp verify page');
+            const res = await axios.post("/register", {
+                name: LsData.username,
+                email: LsData.email,
+                password: LsData.password,
+                otp: otp
+            });
+
             toast.success("User Created Successfully", {
                 position: "top-center",
             });
+            console.log("response ", res);
             navigate("/Login");
+        } catch (err) {
+            console.log("err occur in otpPage ", err.message);
+            if (err.message.includes("400")) {
+                toast.warning("Enter valid Otp");
+            } else {
+                toast.warning("try After sometime");
+            }
+            return;
         }
-        else {
-            toast.error("Enter Valid Otp");
-            console.log("error in otpVerification")
-        }
+
     };
 
 

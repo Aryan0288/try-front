@@ -236,79 +236,25 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import { UserContext } from './UserContext';
 import { toast } from 'react-toastify'
 import TypedText from './TypeText';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 // import dotenv from 'dotenv'
 // dotenv.config();
 
 
 const SignUp = ({ setIsLoggedIn }) => {
-  const navigation=useNavigate();
+  const navigation = useNavigate();
   const [username, setName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [confirmPassword, setconfirmPassword] = useState('');
-  const { setOneTimePass,setUsername, setId, setEmail: setLoggedEmail } = useContext(UserContext);
+  const { setOneTimePass, setUsername, setId, setEmail: setLoggedEmail } = useContext(UserContext);
 
 
 
   const [pass, setpass] = useState(false);
   const [pass1, setpass1] = useState(false);
 
-
-  // async function submitHandler(event) {
-  //   console.log("data submit");
-  //   event.preventDefault();
-  //   if (password != confirmPassword) {
-  //     toast.warning('Password Doesnot Match');
-  //     return;
-  //   }
-  //   try {
-  //     // // first remove not verify user from the database
-  //     // await axios.delete("/notverifyDeleted");
-  //     // // then signUp the new User
-  //     // console.log("email ",email);
-  //     // console.log("pass ",username);
-  //     // console.log("user ",password);
-  //     // const { data } = await axios.post("/register", { username, password, email });
-
-  //     // toast.info(`Verify Email Address`);
-
-  //     // // setOneTimePass(data.otp);
-  //     // // console.log("data otp :",data.otp);
-  //     // // setLoggedEmail(email);
-  //     // let otp=data.otp;
-  //     // let email=email;
-  //     // console.log("email ",email);
-  //     // localStorage.setItem("temp",JSON.stringify({otp,email}));
-  //     // navigation("/otpVerification"); 
-      
-  //      // first remove not verify user from the database
-  //     //  await axios.delete("/notverifyDeleted");
-  //      // then signUp the new User
-  //      toast.info(`Verify Email Address`);
-  //      const { data } = await axios.post("/register", { username, password, email });
- 
- 
-  //     //  setOneTimePass(data.otp);
-  //     //  setLoggedEmail(email);
-  //      let otpLs=data.otp;
-  //      localStorage.setItem("temp",JSON.stringify({otpLs,email}));
-  //      navigation("/otpVerification"); 
-       
-  //   }
-  //   catch (err) { 
-  //     console.log("i am in err" + err);
-  //     if (err.response && err.response.status === 400) {
-
-  //       toast.error('Email already registered', {
-  //         position: "top-center"
-  //       });
-  //       return;
-  //     }
-  //     toast.warning('Error Occur');
-  //   }
-  // }
 
 
   async function submitHandler(event) {
@@ -318,29 +264,32 @@ const SignUp = ({ setIsLoggedIn }) => {
       toast.warning('Password Doesnot Match');
       return;
     }
+    let response;
     try {
-      // first remove not verify user from the database
-      await axios.delete("/notverifyDeleted");
-      // then signUp the new User
-      const data = await axios.post("/register", { username, password, email });
 
+      // then signUp the new User
+
+      response = await axios.post("/sendotp", { email });
       toast.info(`Verify Email Address`);
-      console.log("data ",data);
-      setOneTimePass(data.data.otp);
-      setLoggedEmail(email);
-      navigation("/otpVerification"); 
+      // const { data } = await axios.post("/register", { username, password, email });
+      const LsData = {
+        email,
+        password,
+        username
+      }
+
+      localStorage.setItem("temp", JSON.stringify(LsData));
+      navigation("/otpVerification");
 
     }
-    catch (err) { 
-      console.log("i am in err" + err);
-      if (err.response && err.response.status === 400) {
-
-        toast.error('Email already registered', {
-          position: "top-center"
-        });
-        return;
+    catch (err) {
+      console.log("err ", err.message, response);
+      if (err.message.includes("401")) {
+        toast.error("User Already Exist");
+      } else {
+        toast.error("Try after sometime");
       }
-      toast.warning('Error Occur');
+      return;
     }
   }
 

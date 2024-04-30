@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 const SignUp = ({ setIsLoggedIn }) => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const { setUsername: setLoggedInUsername, setId, setEmail: setLoggedEmail } = useContext(UserContext);
@@ -16,41 +16,42 @@ const SignUp = ({ setIsLoggedIn }) => {
     const [pass, setpass] = useState(false);
 
 
-    // async function submitHandler(event) {
-    //     console.log("login Page");
-    //     event.preventDefault();
-    //     try {
-    //         localStorage.removeItem("token");
-    //         const { data } = await axios.post("/login", { username, password });
-    //         console.log("data: ",data);
-    //         const storeLocalStorage={
-    //             username:data.foundUser.username,
-    //             id:data.foundUser._id,
-    //             email:data.foundUser.email,
-    //         }
-    //         localStorage.setItem("token",JSON.stringify(storeLocalStorage));
+    async function submitHandler(event) {
+        console.log("login Page");
+        event.preventDefault();
+        try {
+            localStorage.removeItem("token");
+            const { data } = await axios.post("/login", { username, password });
+            console.log("data: ", data);
+            const storeLocalStorage = {
+                username: data.foundUser.username,
+                id: data.foundUser._id,
+                email: data.foundUser.email,
+            }
+            localStorage.setItem("token", JSON.stringify(storeLocalStorage));
 
-    //         setLoggedInUsername(data.foundUser.username);
-    //         setId(data.foundUser._id);
-    //         setLoggedEmail(data.foundUser.email);
+            setLoggedInUsername(data.foundUser.username);
+            setId(data.foundUser._id);
+            setLoggedEmail(data.foundUser.email);
 
-    //         // await axios.delete("/notverifyDeleted");
-
-    //         toast.success(`${data.message}`, {
-    //             position: "top-center"
-    //         });
-    //         navigate("/chat");  
-    //     }
-    //     catch (err) {
-    //         console.log("i am in err " + err);
-    //         if(err.message.includes(404)){
-    //             toast.warning('User Notfound');
-    //             return;
-    //         }
-    //         toast.warning('Error Occur');
-    //         return;
-    //     }
-    // }
+            toast.success(`${data.message}`, {
+                position: "top-center"
+            });
+            navigate("/chat");
+        }
+        catch (err) {
+            console.log("i am in err " + err);
+            if (err.message.includes("401")) {
+                toast.warning('User Notfound');
+                return;
+            } else {
+                toast.warning('Try After sometime');
+                return;
+            }
+            toast.warning('Error Occur');
+            return;
+        }
+    }
 
     async function submitHandler(event) {
         console.log("login Page");
@@ -67,11 +68,11 @@ const SignUp = ({ setIsLoggedIn }) => {
             toast.success(`${data.message}`, {
                 position: "top-center"
             });
-            navigate("/chat");  
+            navigate("/chat");
         }
         catch (err) {
             console.log("i am in err " + err);
-            if(err.message.includes(404)){
+            if (err.message.includes(404)) {
                 toast.warning('User Notfound');
                 return;
             }
