@@ -64,6 +64,7 @@ const SignUp = ({ setIsLoggedIn }) => {
 
             console.log("data in login page : ", data.message);
             console.log("data in login page : ", data);
+            
             setLoggedInUsername(data.foundUser.username);
             setId(data.foundUser._id);
             setLoggedEmail(data.foundUser.email);
