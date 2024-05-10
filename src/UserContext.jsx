@@ -10,6 +10,7 @@ export function UserContextProvider({ children }) {
     const [id, setId] = useState();
     const [email, setEmail] = useState();
     const [oneTimePass, setOneTimePass] = useState();
+    const [newMessageText, setNewMessageText] = useState();
    
 
     // profile fetch function
@@ -42,7 +43,9 @@ export function UserContextProvider({ children }) {
         email,
         setEmail,
         oneTimePass,
-        setOneTimePass
+        setOneTimePass,
+        newMessageText,
+        setNewMessageText
     }
 
 

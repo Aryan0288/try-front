@@ -8,20 +8,21 @@ import { UserContext } from './UserContext';
 import Contact from './Contact';
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
+import FreeSoloCreateOptionDialog from './FreeSoloCreateOptionDialog';
 
 export default function Chat() {
     const [ws, setWs] = useState(null);
     const [onlinePeople, setOnlinePeople] = useState({});
     const [offlinePeople, setOfflinePeople] = useState({});
     const [selectedUserId, setSelectedUserId] = useState(null);
-    const [newMessageText, setNewMessageText] = useState('');
+    // const [newMessageText, setNewMessageText] = useState('');
     const [messages, setMessages] = useState([]);
     const [messageId, setMessagesId] = useState("");
 
     const messagesBoxRef = useRef();
-    const { username, id, setId, setUsername } = useContext(UserContext);
+    const { username, id, setId, setUsername, newMessageText,setNewMessageText } = useContext(UserContext);
     const navigate = useNavigate();
-
+    console.log("textValue: ", newMessageText);
     useEffect(() => {
         connectToWs();
         console.log("this is ws connector");
@@ -31,7 +32,7 @@ export default function Chat() {
         // const ws = new WebSocket('ws://localhost:4000');
         // const ws = new WebSocket('https://chat-back-ier8.onrender.com');
         const ws = new WebSocket('wss://try-backend-ouni.onrender.com');
-        
+
 
         setWs(ws);
         ws.addEventListener('message', handleMessage);
@@ -303,8 +304,8 @@ export default function Chat() {
                 <div className='flex-grow lg:mx-2'>
                     {/* <div className='flex h-full flex-grow items-center justify-center'> */}
                     {!selectedUserId && (
-                        <div className='flex h-full flex-grow items-center justify-center w-screen max-md:hidden'>
-                            <div className='text-gray-800'>&larr; Select a person from sidebar</div>
+                        <div className='flex h-full pr-[25rem] flex-grow items-center justify-center w-screen max-md:hidden'>
+                            <div className='text-gray-800 font-medium'>&larr; Select a person from sidebar</div>
                         </div>
                     )}
                     {/* </div> */}
@@ -355,19 +356,21 @@ export default function Chat() {
 
                 {!!selectedUserId && (
                     <form onSubmit={sendMessage} className='flex items-center gap-2 mx-2 p-2 pb-2'>
-                        <input type='text'
+                        <FreeSoloCreateOptionDialog />
+                        {/* <input type='text'
                             value={newMessageText}
                             onChange={ev => setNewMessageText(ev.target.value)}
                             placeholder='type your message here'
-                            className='bg-white flex-grow border p-2 rounded-md' />
-                        <label className='cursor-pointer'>
+                            className='bg-white flex-grow border p-2 rounded-md'
+                        /> */}
+                        <label className='cursor-pointer pt-6'>
                             <input type='file' className='hidden' onChange={sendFile} />
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
                             </svg>
                         </label>
-                        <button type='submit' className='bg-blue-500 p-2 text-white rounded-md'>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <button type='submit' className='bg-blue-500 p-2 text-white rounded-md mt-6'>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
                             </svg>
                         </button>

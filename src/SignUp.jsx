@@ -238,6 +238,15 @@ import { toast } from 'react-toastify'
 import TypedText from './TypeText';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Box from "@mui/material/Box";
+import LinearProgress from '@mui/material/LinearProgress';
+import './SignUp.css'
+import FreeSoloCreateOptionDialog from './FreeSoloCreateOptionDialog';
+import Grid from '@mui/material/Grid';
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import SignUpBackground from './Components/SignUpBackground'
+
 // import dotenv from 'dotenv'
 // dotenv.config();
 
@@ -249,7 +258,7 @@ const SignUp = ({ setIsLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [confirmPassword, setconfirmPassword] = useState('');
   const { setOneTimePass, setUsername, setId, setEmail: setLoggedEmail } = useContext(UserContext);
-
+  const [isLoading, setIsLoading] = useState(false);
 
 
   const [pass, setpass] = useState(false);
@@ -264,25 +273,28 @@ const SignUp = ({ setIsLoggedIn }) => {
       toast.warning('Password Doesnot Match');
       return;
     }
-   
+
     try {
+      setIsLoading(true);
 
       // then signUp the new User
 
       let response = await axios.post("/sendotp", { email });
       toast.info(`Verify Email Address`);
-      console.log("response of sendotp ",response);
+      console.log("response of sendotp ", response);
       const LsData = {
         email,
         password,
         username
       }
-      
+
       localStorage.setItem("temp", JSON.stringify(LsData));
+      setIsLoading(false);
       navigation("/otpVerification");
 
     }
     catch (err) {
+      setIsLoading(false);
       console.log("err ", err.message);
       if (err.message.includes("401")) {
         toast.error("User Already Exist");
@@ -294,115 +306,151 @@ const SignUp = ({ setIsLoggedIn }) => {
   }
 
 
-
+  const defaultTheme = createTheme();
   return (
-    <div className='flex md:flex-row flex-col w-full h-screen bg-[#000814]'>
-      <form method='post' onSubmit={submitHandler} className='flex flex-col gap-5 w-full text-white text-[18px]'>
-        <div className='flex flex-col gap-3 xl:w-8/12 w-10/12 mx-auto mt-[4rem]'>
-          <div className='text-3xl mb-[5rem] text-yellow-400'>
-            <TypedText />
-          </div>
-          <div className='flex gap-4'>
+    <div>
+      <Box sx={{ width: '100%', overflow: "hidden" }}>
+        {isLoading &&
+          <LinearProgress sx={{ height: "6px", borderRadius: "20px", overflow: "hidden" }} />
+        }
+      </Box>
+      <div className='relative overflow-hidden  h-screen bg-[#000814]'>
+        <div className='top-[5rem]  pb-4 md:w-[30%] sm:w-[80%] w-[70%] flex justify-center items-center left-[3.5rem] md:left-[5rem] right-[5rem] absolute signin'>
+          <div className='content '>
+            <form method='post' onSubmit={submitHandler} className='form flex  flex-col gap-5 text-white text-[18px]'>
+              <div className='flex flex-col gap-3 xl:w-9/12 w-10/12 mx-auto mt-[1rem]'>
+                <div className='text-3xl mb-[1rem] text-yellow-400'>
+                  <TypedText />
+                </div>
+                <div className='flex gap-2'>
 
-            <label className='w-full'>
-              <p>UserName <sup className='text-red-500 text-[14px] font-bold'>*</sup></p>
-              <input
-                className='p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
-                required
-                type='text'
-                name='username'
-                onChange={(e) => setName(e.target.value)}
-                placeholder='UserName'
-                value={username}
-                autoComplete='new-name'
-              />
-            </label>
+                  <label className='inputBox w-full'>
+                    {/* <p>Username <sup className='text-red-500 text-[14px] font-bold'>*</sup></p> */}
+                    <input
+                      className='txt-font p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
+                      required
+                      type='text'
+                      name='username'
+                      onChange={(e) => setName(e.target.value)}
+                      // placeholder='UserName'
+                      value={username}
+                      autoComplete='new-name'
+                    />
+                    <i>Username</i>
+                  </label>
 
-          </div>
-          <div>
+                </div>
+                <div>
 
-            <label className='w-full'>
-              <p>Email Address <sup className='text-red-500 text-[14px] font-bold'>*</sup></p>
+                  <label className='inputBox w-full'>
+                    {/* <p>Email Address <sup className='text-red-500 text-[14px] font-bold'>*</sup></p> */}
 
-              <input
-                className='p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
-                required
-                type='email'
-                name='email'
-                onChange={e => setEmail(e.target.value)}
-                placeholder='Enter Your Email Address'
-                value={email}
-                autoComplete='new-email'
-              />
-            </label>
+                    <input
+                      className='txt-font p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
+                      required
+                      type='email'
+                      name='email'
+                      onChange={e => setEmail(e.target.value)}
+                      value={email}
+                      autoComplete='new-email'
+                    />
+                    <i>Email</i>
+                  </label>
 
-          </div>
+                </div>
 
-          <div className='flex lg:flex-row flex-col gap-4'>
-            <label className='w-full relative'>
-              <p>Create Password <sup className='text-red-500 text-[14px] font-bold'>*</sup></p>
-              <input
-                className='p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
-                type={pass ? ('text') : ('password')}
-                name='password'
-                value={password}
-                placeholder='Enter Your Password'
-                required
-                onChange={e => setPassword(e.target.value)}
-                autoComplete='new-password'
-              />
-              <span className='absolute right-2 text-[22px] top-10 cursor-pointer'
-                onClick={() => setpass((prev) => !prev)}>
-                {pass ? (<AiOutlineEyeInvisible />) : (<AiOutlineEye />)}
-              </span>
-            </label>
+                {/* <div className='flex lg:flex-row flex-col gap-4'> */}
+                <label className='inputBox w-full relative'>
+                  {/* <p>Create Password <sup className='text-red-500 text-[14px] font-bold'>*</sup></p> */}
+                  <input
+                    className='txt-font p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
+                    type={pass ? ('text') : ('password')}
+                    name='password'
+                    value={password}
+                    // placeholder='Password'
+                    required
+                    onChange={e => setPassword(e.target.value)}
+                    autoComplete='new-password'
+                  />
+                  <span className=' absolute right-2 text-[22px] top-5 cursor-pointer'
+                    onClick={() => setpass((prev) => !prev)}>
+                    {pass ? (<AiOutlineEyeInvisible />) : (<AiOutlineEye />)}
+                  </span>
+                  <i>Password</i>
+                </label>
 
-            <label className='w-full relative'>
-              <p>Confirm Password <sup className='text-red-500 text-[14px] font-bold'>*</sup></p>
-              <input
-                className='p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
-                type={pass1 ? ('text') : ('password')}
-                name='confirmPassword'
-                value={confirmPassword}
-                placeholder='Enter Your Password'
-                required
-                onChange={e => setconfirmPassword(e.target.value)}
-              />
-              <span className='absolute right-2 text-[22px] top-10 cursor-pointer '
-                onClick={() => setpass1((prev) => !prev)}>
-                {pass1 ? (<AiOutlineEyeInvisible />) : (<AiOutlineEye />)}
-              </span>
-            </label>
+                <label className='inputBox w-full relative'>
+                  {/* <p>Confirm Password <sup className='text-red-500 text-[14px] font-bold'>*</sup></p> */}
+                  <input
+                    className='txt-font p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
+                    type={pass1 ? ('text') : ('password')}
+                    name='confirmPassword'
+                    value={confirmPassword}
+                    // placeholder='Password'
+                    required
+                    onChange={e => setconfirmPassword(e.target.value)}
+                  />
+                  <span className='absolute right-2 text-[22px] top-5  cursor-pointer '
+                    onClick={() => setpass1((prev) => !prev)}>
+                    {pass1 ? (<AiOutlineEyeInvisible />) : (<AiOutlineEye />)}
+                  </span>
+                  <i>Confirm Password</i>
+                </label>
 
 
-          </div>
+                {/* </div> */}
 
 
-          <div className='mt-2'>
+                <div className='mt-2'>
 
-            <button className='w-full py-2 rounded-md text-black bg-yellow-400 font-semibold'>
-              Create Account
-            </button>
+                  <button className='w-full py-2 rounded-md text-black bg-yellow-400 font-semibold'>
+                    Create Account
+                  </button>
+                </div>
+              </div>
+
+              <div className='text-center'>
+
+
+                <div>
+                  Already a member?
+                  <Link to={"/Login"}>
+                    < button>&nbsp; Login here</button>
+                  </Link>
+                </div>
+
+
+
+              </div>
+            </form>
           </div>
         </div>
-
-        <div className='text-center'>
-
-
-          <div>
-            Already a member?
-            <Link to={"/Login"}>
-              < button>&nbsp; Login here</button>
-            </Link>
-          </div>
-
-
-
+        <div className='md:w-[44vw] w-full overflow-hidden '>
+          <SignUpBackground />
         </div>
-      </form>
-      <div className='max-md:hidden'>
-        <img className='h-full  bg-cover' src='https://assets-global.website-files.com/5ee715da7b6fbc3bf68c6bfe/64918c2270e6f03c6d5ae3b2_tutorial_building-a-jetpack-compose-chat-app.jpg' />
+
+        <ThemeProvider theme={defaultTheme}>
+          <Grid container component="main" sx={{ height: '100vh', marginLeft: "28%", lg: 'block', sm: 'none' }}>
+            <CssBaseline />
+            <Grid
+              item
+              xs={false}
+              sm={4}
+              md={18}
+              sx={{
+                backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+                backgroundRepeat: 'no-repeat',
+                backgroundColor: (t) =>
+                  t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                display: { md: 'block', sm: 'none' },
+              }}
+            />
+          </Grid>
+        </ThemeProvider>
       </div>
+
 
 
     </div>

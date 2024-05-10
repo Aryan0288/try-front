@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Typed from 'typed.js';
+import './index.css'
 
 const TypedText = () => {
   useEffect(() => {

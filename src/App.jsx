@@ -6,6 +6,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter } from 'react-router-dom'
 
+import './index.css' //css file 
+
 function App() {
   // wherever axios is used,this url will be utilized 
   // axios.defaults.baseURL = 'http://localhost:4000';
@@ -14,7 +16,7 @@ function App() {
   axios.defaults.withCredentials = true;
 
   return (
-    <div className=''>
+    <div className='body'>
       <BrowserRouter>
         <UserContextProvider>
           <Routes />
