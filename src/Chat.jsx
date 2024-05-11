@@ -193,6 +193,7 @@ export default function Chat() {
             // })
             
             // new code to fetch messages
+            console.log(selectedUserId);
             axios.get('/messages/' + selectedUserId).then(res => {
                 setMessages(res.data);
             });
