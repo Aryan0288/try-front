@@ -87,7 +87,7 @@ export default function Chat() {
     async function sendMessage(ev, file = null) {
 
         if (ev) ev.preventDefault();
-        if (file == null && newMessageText.trim().length == 0) {
+        if (file == null && newMessageText.trim().length === 0) {
             toast.warning("Can't send empty message", {
                 position: "bottom-center"
             });
@@ -101,10 +101,15 @@ export default function Chat() {
         }));
 
         if (file) {
-            await axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
-                console.log("res data : ", res.data);
+            // old fetch data
+            // await axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
+            //     console.log("res data : ", res.data);
+            //     setMessages(res.data);
+            // })
+            axios.get('/messages/' + selectedUserId).then(res => {
+                console.log("res.data : ", res.data);
                 setMessages(res.data);
-            })
+            });
         } else {
             setNewMessageText('');
             setMessages(prev => ([...prev, {
