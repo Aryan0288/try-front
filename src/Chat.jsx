@@ -87,13 +87,13 @@ export default function Chat() {
     async function sendMessage(ev, file = null) {
 
         if (ev) ev.preventDefault();
-        if (file == null && newMessageText.trim().length === 0) {
-            toast.warning("Can't send empty message", {
-                position: "bottom-center"
-            });
-            console.log("empty message");
-            return;
-        }
+        // if (file == null && newMessageText.trim().length === 0) {
+        //     toast.warning("Can't send empty message", {
+        //         position: "bottom-center"
+        //     });
+        //     console.log("empty message");
+        //     return;
+        // }
         ws.send(JSON.stringify({
             recipient: selectedUserId,
             text: newMessageText,
@@ -183,7 +183,7 @@ export default function Chat() {
             // console.log(offlinePeople);
             setOfflinePeople(offlinePeople);
         });
-    }, [id, onlinePeople]);
+    }, [onlinePeople]);
 
     useEffect(() => {
         if (selectedUserId) {
@@ -203,10 +203,8 @@ export default function Chat() {
     const onlinePeopleExclOurUser = { ...onlinePeople };
 
     delete onlinePeopleExclOurUser[id];
-
-
-
     const messagesWithoutDupes = uniqBy(messages, '_id');
+
 
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
