@@ -110,6 +110,7 @@ export default function Chat() {
             setMessages(prev => ([...prev, {
                 text: newMessageText,
                 sender: id,
+                file:file.name,
                 recipient: selectedUserId,
                 _id: Date.now(),
             }]));
