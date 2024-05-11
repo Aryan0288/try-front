@@ -105,7 +105,7 @@ export default function Chat() {
             // await axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
             //     console.log("res data : ", res.data);
             //     setMessages(res.data);
-            // })
+            // }) 
             axios.get('/messages/' + selectedUserId).then(res => {
                 console.log("res.data : ", res.data);
                 setMessages(res.data);
@@ -186,10 +186,15 @@ export default function Chat() {
 
     useEffect(() => {
         if (selectedUserId) {
-            axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
-                // console.log("data is here ", res)
+            // axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
+            //     // console.log("data is here ", res)
+            //     setMessages(res.data);
+            // })
+            
+            // new code to fetch messages
+            axios.get('/messages/' + selectedUserId).then(res => {
                 setMessages(res.data);
-            })
+            });
         }
     }, [selectedUserId])
 
