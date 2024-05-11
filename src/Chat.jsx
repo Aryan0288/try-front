@@ -87,13 +87,6 @@ export default function Chat() {
     async function sendMessage(ev, file = null) {
 
         if (ev) ev.preventDefault();
-        // if (file == null && newMessageText.trim().length === 0) {
-        //     toast.warning("Can't send empty message", {
-        //         position: "bottom-center"
-        //     });
-        //     console.log("empty message");
-        //     return;
-        // }
         ws.send(JSON.stringify({
             recipient: selectedUserId,
             text: newMessageText,
@@ -107,10 +100,19 @@ export default function Chat() {
             //     setMessages(res.data);
             // }) 
             // new code to fetch messages
-            await axios.get('/messages/' + selectedUserId).then(res => {
-                console.log("res.data : ", res.data);
-                setMessages(res.data);
-            });
+            // await axios.get('/messages/' + selectedUserId).then(res => {
+            //     console.log("res.data : ", res.data);
+            //     setMessages(res.data);
+            // });
+
+
+
+            setMessages(prev => ([...prev, {
+                text: newMessageText,
+                sender: id,
+                recipient: selectedUserId,
+                _id: Date.now(),
+            }]));
         } else {
             setNewMessageText('');
             setMessages(prev => ([...prev, {
@@ -191,14 +193,14 @@ export default function Chat() {
             //     // console.log("data is here ", res)
             //     setMessages(res.data);
             // })
-            
+
             // new code to fetch messages
             console.log(selectedUserId);
             axios.get('/messages/' + selectedUserId).then(res => {
                 setMessages(res.data);
             });
         }
-    }, [selectedUserId])
+    }, [selectedUserId,setMessages]);
 
     const onlinePeopleExclOurUser = { ...onlinePeople };
 
