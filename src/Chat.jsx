@@ -22,7 +22,7 @@ export default function Chat() {
     const messagesBoxRef = useRef();
     const { username, id, setId, setUsername, newMessageText, setNewMessageText } = useContext(UserContext);
     const navigate = useNavigate();
-    console.log("textValue: ", newMessageText);
+    // console.log("textValue: ", newMessageText);
     useEffect(() => {
         connectToWs();
         console.log("this is ws connector");
@@ -107,7 +107,7 @@ export default function Chat() {
             //     setMessages(res.data);
             // }) 
             // new code to fetch messages
-            axios.get('/messages/' + selectedUserId).then(res => {
+            await axios.get('/messages/' + selectedUserId).then(res => {
                 console.log("res.data : ", res.data);
                 setMessages(res.data);
             });
