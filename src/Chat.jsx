@@ -20,7 +20,7 @@ export default function Chat() {
     const [messageId, setMessagesId] = useState("");
 
     const messagesBoxRef = useRef();
-    const { username, id, setId, setUsername, newMessageText,setNewMessageText } = useContext(UserContext);
+    const { username, id, setId, setUsername, newMessageText, setNewMessageText } = useContext(UserContext);
     const navigate = useNavigate();
     console.log("textValue: ", newMessageText);
     useEffect(() => {
@@ -120,9 +120,11 @@ export default function Chat() {
 
     // file send function
     function sendFile(ev) {
+        console.log("sendFile: ", ev.target.files[0].name);
+
         const reader = new FileReader();
         reader.readAsDataURL(ev.target.files[0]);
-        reader.onloadend = () => {
+        reader.onload = () => {
             sendMessage(null, {
                 name: ev.target.files[0].name,
                 data: reader.result,
