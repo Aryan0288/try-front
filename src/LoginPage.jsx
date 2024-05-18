@@ -73,72 +73,8 @@ const SignUp = ({ setIsLoggedIn }) => {
                 }
             </Box>
             <div className='flex overflow-hidden h-screen bg-[#000814]'>
-                <div className='max-md:top-[5rem] top-[8rem] md:left-[5rem] left-[3.5rem] right-[5rem] pb-4 md:w-[30%] sm:w-[80%] w-[70%] flex justify-center items-center absolute signin'>
+                <div className='max-md:top-[5rem] top-[8rem] md:left-[5rem] left-[2.5rem] right-[5rem] pb-4 md:w-[30%] sm:w-[80%] w-[80%] flex justify-center items-center absolute signin'>
                     <div className='content '>
-                        {/* <form method='post' onSubmit={submitHandler} className='flex flex-col gap-5 text-white text-[18px]'>
-                            <div className='flex flex-col gap-3 xl:w-9/12 w-10/12 mx-auto mt-[1rem]'>
-                                <div className='text-3xl mb-[1rem] text-yellow-400'>
-                                    <TypedText />
-                                </div>
-                                <div className='flex gap-2'>
-
-                                    <label className='inputBox w-full'>
-                                        <input
-                                            className='txt-font p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
-                                            required
-                                            type='text'
-                                            name='username'
-                                            onChange={(e) => setUsername(e.target.value)}
-                                        
-                                            value={username}
-                                            autoComplete='new-name'
-                                        />
-                                        <i>Email</i>
-                                    </label>
-                                </div>
-
-                                <div className='flex gap-4'>
-                                    <label className='inputBox w-full relative'>
-
-                                        <input
-                                            className='txt-font p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
-                                            type={pass ? ('text') : ('password')}
-                                            name='password'
-                                            value={password}
-                                            placeholder='Enter Your Password'
-                                            required
-                                            onChange={e => setPassword(e.target.value)}
-                                            autoComplete='new-password'
-                                        />
-                                        <span className='absolute right-2 text-[22px] top-10 cursor-pointer'
-                                            onClick={() => setpass((prev) => !prev)}>
-                                            {pass ? (<AiOutlineEyeInvisible />) : (<AiOutlineEye />)}
-                                        </span>
-                                        <i>Password</i>
-                                    </label>
-                                </div>
-
-
-                                <div className='mt-2'>
-
-                                    <button className='w-full py-2 rounded-md text-black bg-yellow-400 font-semibold'>
-                                        Sign In
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div className='text-center'>
-                                <div>
-                                    Don't have an account?
-                                    <Link to={"/"}>
-                                        < button> &nbsp;Register </button>
-                                    </Link>
-                                </div>
-                            </div>
-                        </form> */}
-
-
-
                         <form method='post' onSubmit={submitHandler} className='form flex  flex-col gap-5 text-white text-[18px]'>
                             <div className='flex flex-col gap-3 xl:w-9/12 w-10/12 mx-auto mt-[2rem]'>
                                 <div className='text-3xl mb-[1rem] text-yellow-400'>
@@ -196,7 +132,7 @@ const SignUp = ({ setIsLoggedIn }) => {
                                 </div>
                             </div>
 
-                            <div className='text-center mb-5'>
+                            <div className='xl:w-9/12 w-8/12 mx-auto text-center mb-5'>
                                 <div>
                                     Don't have an account?
                                     <Link to={"/"}>
@@ -211,26 +147,14 @@ const SignUp = ({ setIsLoggedIn }) => {
                 <div className='md:w-[44vw] w-[100%] overflow-hidden '>
                     <SignUpBackground />
                 </div>
-                <ThemeProvider theme={defaultTheme}>
-                    <Grid container component="main" sx={{ height: '100vh', marginLeft: "28%", lg: 'block', sm: 'none' }}>
-                        <CssBaseline />
-                        <Grid
-                            item
-                            xs={false}
-                            sm={4}
-                            md={18}
-                            sx={{
-                                backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-                                backgroundRepeat: 'no-repeat',
-                                backgroundColor: (t) =>
-                                    t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                display: { md: 'block', sm: 'none' },
-                            }}
-                        />
-                    </Grid>
-                </ThemeProvider>
+                <div className='max-md:hidden flex justify-between'>
+                    <div className='w-[0%]'></div>
+                    <div className='w-[76%] h-screen relative'>
+                        <video autoPlay muted loop className='h-full w-full object-fill'>
+                            <source src='https://cdn.pixabay.com/video/2021/10/01/90426-624025026_large.mp4' type='video/mp4' />
+                        </video>
+                    </div>
+                </div>
 
 
             </div>

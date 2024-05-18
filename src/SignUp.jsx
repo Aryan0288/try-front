@@ -315,7 +315,7 @@ const SignUp = ({ setIsLoggedIn }) => {
         }
       </Box>
       <div className='relative overflow-hidden  h-screen bg-[#000814]'>
-        <div className='top-[5rem]  pb-4 md:w-[30%] sm:w-[80%] w-[70%] flex justify-center items-center left-[3.5rem] md:left-[5rem] right-[5rem] absolute signin'>
+        <div className='top-[5rem]  pb-4 md:w-[30%] sm:w-[80%] w-[80%] flex justify-center items-center left-[2.5rem] md:left-[5rem] right-[5rem] absolute signin'>
           <div className='content '>
             <form method='post' onSubmit={submitHandler} className='form flex  flex-col gap-5 text-white text-[18px]'>
               <div className='flex flex-col gap-3 xl:w-9/12 w-10/12 mx-auto mt-[1rem]'>
@@ -409,7 +409,7 @@ const SignUp = ({ setIsLoggedIn }) => {
                 </div>
               </div>
 
-              <div className='text-center'>
+              <div className='xl:w-9/12 w-8/12 mx-auto text-center'>
 
 
                 <div>
@@ -429,30 +429,16 @@ const SignUp = ({ setIsLoggedIn }) => {
           <SignUpBackground />
         </div>
 
-        <ThemeProvider theme={defaultTheme}>
-          <Grid container component="main" sx={{ height: '100vh', marginLeft: "28%", lg: 'block', sm: 'none' }}>
-            <CssBaseline />
-            <Grid
-              item
-              xs={false}
-              sm={4}
-              md={18}
-              sx={{
-                backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-                backgroundRepeat: 'no-repeat',
-                backgroundColor: (t) =>
-                  t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                display: { md: 'block', sm: 'none' },
-              }}
-            />
-          </Grid>
-        </ThemeProvider>
+        <div className='max-md:hidden flex justify-between'>
+          <div className='w-[50%]'></div>
+          <div className='w-[50%] h-screen relative'>
+            <video autoPlay muted loop className='h-full w-full object-fill'>
+              <source src='https://cdn.pixabay.com/video/2021/10/01/90426-624025026_large.mp4' type='video/mp4' />
+            </video>
+          </div>
+        </div>
+        
       </div>
-
-
-
     </div>
   )
 }
