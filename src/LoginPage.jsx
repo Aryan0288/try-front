@@ -25,12 +25,12 @@ const SignUp = ({ setIsLoggedIn }) => {
 
     async function submitHandler(event) {
         setIsLoading(true);
-        console.log("login Page");
+        // console.log("login Page");
         event.preventDefault();
         try {
             localStorage.removeItem("token");
             const { data } = await axios.post("/login", { username, password });
-            console.log("data: ", data);
+            // console.log("data: ", data);
             const storeLocalStorage = {
                 username: data.foundUser.username,
                 id: data.foundUser._id,

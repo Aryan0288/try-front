@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 // import Register from './RegisterAndLogin.jsx';
 import { UserContext } from './UserContext.jsx';
 import SignUp from './SignUp.jsx';
@@ -7,8 +7,12 @@ import LoginPage from './LoginPage.jsx'
 import { Route, Routes } from 'react-router-dom';
 import OTPVerification from './Components/otpVerification.jsx';
 
-
 export default function RoutesPath() {
+  console.log("I am in route file");
+  const [tokenPresent,setTokenPresent]=useState();
+
+
+
 
   return (
 

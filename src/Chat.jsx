@@ -86,15 +86,16 @@ export default function Chat() {
 
     // Handle the send files
     async function sendMessage(ev, file = null) {
-        if(newMessageText.length>100){
+        if (ev) ev.preventDefault();
+        console.log("message : ",newMessageText);
+        if (newMessageText && newMessageText.length > 100) {
             toast.error("Message is too long");
             return;
         }
-        if(file==null && newMessageText.length===0){
+        if (!file && (!newMessageText || newMessageText.length === 0)) {
             toast.warning("Cannot send empty message");
             return;
         }
-        if (ev) ev.preventDefault();
         ws.send(JSON.stringify({
             recipient: selectedUserId,
             text: newMessageText,
@@ -137,7 +138,7 @@ export default function Chat() {
 
     // file send function
     function sendFile(ev) {
-        console.log("sendFile: ", ev.target.files[0].name);
+        // console.log("sendFile: ", ev.target.files[0].name);
 
         const reader = new FileReader();
         reader.readAsDataURL(ev.target.files[0]);
@@ -171,11 +172,6 @@ export default function Chat() {
 
 
     useEffect(() => {
-        let cookie=document.cookie;
-        if(!cookie){
-            toast.warning("session Expired");
-            navigate("/");
-        }
         const div = messagesBoxRef.current;
         if (div) {
             div.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -209,7 +205,7 @@ export default function Chat() {
             // })
 
             // new code to fetch messages
-            console.log(selectedUserId);
+            // console.log(selectedUserId);
             axios.get('/messages/' + selectedUserId).then(res => {
                 setMessages(res.data);
             });

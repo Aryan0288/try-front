@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter } from 'react-router-dom'
 
 import './index.css' //css file 
+import Chat from './Chat';
 
 function App() {
   // wherever axios is used,this url will be utilized 
@@ -14,7 +15,8 @@ function App() {
   axios.defaults.baseURL = 'https://try-backend-ouni.onrender.com';
 
   axios.defaults.withCredentials = true;
-
+  
+  
   return (
     <div className='body'>
       <BrowserRouter>

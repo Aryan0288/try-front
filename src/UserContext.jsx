@@ -18,9 +18,9 @@ export function UserContextProvider({ children }) {
         try { 
             const res=localStorage.getItem("token");
             const response=JSON.parse(res);
-            console.log("id : ", response.id);
-            console.log("username : ", response.username);
-            console.log("email : ", response.email);    
+            // console.log("id : ", response.id);
+            // console.log("username : ", response.username);
+            // console.log("email : ", response.email);    
 
             setId(response.id);
             setUsername(response.username);
