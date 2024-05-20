@@ -10,7 +10,6 @@ import OTPVerification from './Components/otpVerification.jsx';
 
 export default function RoutesPath() {
 
-
   return (
 
 

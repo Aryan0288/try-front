@@ -18,11 +18,12 @@ export default function Chat() {
     // const [newMessageText, setNewMessageText] = useState('');
     const [messages, setMessages] = useState([]);
     const [messageId, setMessagesId] = useState("");
+    const [checkToken,setCheckToken]=useState();
 
     const messagesBoxRef = useRef();
     const { username, id, setId, setUsername, newMessageText, setNewMessageText } = useContext(UserContext);
     const navigate = useNavigate();
-    // console.log("textValue: ", newMessageText);
+    
     useEffect(() => {
         connectToWs();
         console.log("this is ws connector");
@@ -85,7 +86,14 @@ export default function Chat() {
 
     // Handle the send files
     async function sendMessage(ev, file = null) {
-
+        if(newMessageText.length>100){
+            toast.error("Message is too long");
+            return;
+        }
+        if(file==null && newMessageText.length===0){
+            toast.warning("Cannot send empty message");
+            return;
+        }
         if (ev) ev.preventDefault();
         ws.send(JSON.stringify({
             recipient: selectedUserId,
@@ -163,6 +171,11 @@ export default function Chat() {
 
 
     useEffect(() => {
+        let cookie=document.cookie;
+        if(!cookie){
+            toast.warning("session Expired");
+            navigate("/");
+        }
         const div = messagesBoxRef.current;
         if (div) {
             div.scrollIntoView({ behavior: 'smooth', block: 'end' });
