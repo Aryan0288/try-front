@@ -8,14 +8,29 @@ import { UserContext } from './UserContext';
 export default function FreeSolo() {
     const [value, setValue] = useState('');
     const { newMessageText, setNewMessageText } = useContext(UserContext);
+    const [inputActive, setInputActive] = useState(false);
 
     const handleChange = (event) => {
-        // if (event.key === 'Enter') {
-        // }
         setNewMessageText(event.target.value);
     };
     const handleAutocompleteChange = (event, newValue) => {
         setNewMessageText(newValue);
+        setInputActive(false); // Reset on selection of an autocomplete item
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter' && newMessageText.trim() !== ''  && inputActive) {
+            // Assuming this is how you log/send the message
+            setNewMessageText(''); // Clear the input field after sending
+        }
+    };
+
+    const handleFocus = () => {
+        setInputActive(true); // Set when the input is focused
+    };
+
+    const handleBlur = () => {
+        setInputActive(false); // Reset when the input loses focus
     };
 
     // console.log("input box : ", textValue)
@@ -25,6 +40,7 @@ export default function FreeSolo() {
                 freeSolo
                 id="free-solo-2-demo"
                 disableClearable
+                inputValue={newMessageText}
                 options={top100Films.map((option) => option.title)}
                 onChange={handleAutocompleteChange}
                 renderInput={(params) => (
@@ -35,13 +51,16 @@ export default function FreeSolo() {
                             ...params.InputProps,
                             type: 'search',
                             onChange: handleChange,
-                            style: { fontFamily: 'monospace',fontWeight:"600" } // Set text color of input field (lowercase 'i')
+                            onKeyDown: handleKeyPress,
+                            onFocus: handleFocus,
+                            onBlur: handleBlur,
+                            style: { fontFamily: 'monospace', fontWeight: "600" } // Set text color of input field (lowercase 'i')
                         }}
                         style={{ color: 'primary' }}
                         InputLabelProps={{
-                            style: { color: 'black',fontWeight:"600",fontFamily:"cursive" } // Set label color to white
+                            style: { color: 'black', fontWeight: "600", fontFamily: "cursive" } // Set label color to white
                         }}
-                        
+
                     />
                 )}
             />

@@ -26,12 +26,11 @@ export default function Chat() {
     
     useEffect(() => {
         connectToWs();
-        console.log("this is ws connector");
+        // console.log("this is ws connector");
     }, [selectedUserId])
 
     function connectToWs() {
         // const ws = new WebSocket('ws://localhost:4000');
-        // const ws = new WebSocket('https://chat-back-ier8.onrender.com');
         const ws = new WebSocket('wss://try-backend-ouni.onrender.com');
 
 
@@ -87,7 +86,6 @@ export default function Chat() {
     // Handle the send files
     async function sendMessage(ev, file = null) {
         if (ev) ev.preventDefault();
-        console.log("message : ",newMessageText);
         if (newMessageText && newMessageText.length > 100) {
             toast.error("Message is too long");
             return;
@@ -96,6 +94,8 @@ export default function Chat() {
             toast.warning("Cannot send empty message");
             return;
         }
+        // console.log("messgae : ",newMessageText);
+        // console.log("file : ",file);
         ws.send(JSON.stringify({
             recipient: selectedUserId,
             text: newMessageText,
@@ -132,8 +132,8 @@ export default function Chat() {
                 _id: Date.now(),
             }]));
         }
-
-
+        
+        setNewMessageText('');
     }
 
     // file send function
@@ -257,9 +257,11 @@ export default function Chat() {
         } else if (timeDifferenceInSeconds < DAY) {
             const hours = Math.floor(timeDifferenceInSeconds / HOUR);
             return `${hours}h ago`;
-        } else {
+        } else if(timeDifference>=DAY) {
             const days = Math.floor(timeDifferenceInSeconds / DAY);
             return `${days}d ago`;
+        }else{
+            return "0s ago";
         }
     }
 
