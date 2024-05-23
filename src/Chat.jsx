@@ -3,6 +3,7 @@ import Avatar from './Avatar';
 import Logo from './Logo';
 import { uniqBy } from 'lodash'
 import axios from 'axios'
+import './index.css'
 
 import { UserContext } from './UserContext';
 import Contact from './Contact';
@@ -18,12 +19,12 @@ export default function Chat() {
     // const [newMessageText, setNewMessageText] = useState('');
     const [messages, setMessages] = useState([]);
     const [messageId, setMessagesId] = useState("");
-    const [checkToken,setCheckToken]=useState();
+    const [checkToken, setCheckToken] = useState();
 
     const messagesBoxRef = useRef();
     const { username, id, setId, setUsername, newMessageText, setNewMessageText } = useContext(UserContext);
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         connectToWs();
         // console.log("this is ws connector");
@@ -119,7 +120,7 @@ export default function Chat() {
             setMessages(prev => ([...prev, {
                 text: newMessageText,
                 sender: id,
-                file:file.name,
+                file: file.name,
                 recipient: selectedUserId,
                 _id: Date.now(),
             }]));
@@ -132,7 +133,7 @@ export default function Chat() {
                 _id: Date.now(),
             }]));
         }
-        
+
         setNewMessageText('');
     }
 
@@ -210,7 +211,7 @@ export default function Chat() {
                 setMessages(res.data);
             });
         }
-    }, [selectedUserId,setMessages]);
+    }, [selectedUserId, setMessages]);
 
     const onlinePeopleExclOurUser = { ...onlinePeople };
 
@@ -257,10 +258,10 @@ export default function Chat() {
         } else if (timeDifferenceInSeconds < DAY) {
             const hours = Math.floor(timeDifferenceInSeconds / HOUR);
             return `${hours}h ago`;
-        } else if(timeDifference>=DAY) {
+        } else if (timeDifference >= DAY) {
             const days = Math.floor(timeDifferenceInSeconds / DAY);
             return `${days}d ago`;
-        }else{
+        } else {
             return "0s ago";
         }
     }
@@ -269,7 +270,8 @@ export default function Chat() {
         // <div className='md:h-screen h-screen flex w-screen'>
         //     <div className="bg-blue-200 w-1/3 flex flex-col justify-between">
         <div className='h-screen flex overflow-hidden'>
-            <div className={`bg-blue-200 lg:w-1/3 w-screen flex flex-col justify-between overflow-hidden`}>
+            {/* <div className={`bg-blue-200 lg:w-1/3 w-screen flex flex-col justify-between overflow-hidden`}> */}
+            <div className={`bg-gray-800 text-white lg:w-1/3 w-screen flex flex-col justify-between overflow-hidden`}>
                 <div className='flex-grow'>
                     <Logo />
                     {
@@ -309,15 +311,15 @@ export default function Chat() {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
                         </div>
-                        <div className='font-mono font-bold text-xl pr-1 capitalize'>
+                        <div className='font-mono font-medium md:text-2xl text-xl pr-1 capitalize'>
                             {username}
                         </div>
                     </div>
-                    <div onClick={logout} className='flex bg-yellow-500 items-center justify-center'>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 p-2 cursor-pointer">
+                    <div onClick={logout} className='flex bg-green-500 items-center justify-center'>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 text-black p-2 cursor-pointer">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
                         </svg>
-                        <button title='SignOut' className='text-md text-black font-bold lg:p-2'>Sign out &nbsp;</button>
+                        <button title='SignOut' className='text-md text-white md:text-xl font-medium lg:p-2'>Sign out &nbsp;</button>
 
                     </div>
                 </div>
@@ -326,21 +328,23 @@ export default function Chat() {
 
             {/* <div className="flex flex-col bg-blue-400 md:w-2/3 ">
                 <div className='flex-grow md:mx-2'> */}
-            <div className={`flex flex-col bg-blue-400 lg:w-2/3 (${!selectedUserId} ? hidden:w-full)`}>
-                <div className='flex-grow lg:mx-2'>
+            {/* <div className={`flex flex-col bg-blue-400 lg:w-2/3 (${!selectedUserId} ? hidden:w-full)`}> */}
+            <div className={`${selectedUserId ? "bg-img bg-zinc-800 " : ""} flex flex-col lg:w-2/3`}>
+                <div className=' flex-grow lg:mx-2'>
                     {/* <div className='flex h-full flex-grow items-center justify-center'> */}
                     {!selectedUserId && (
-                        <div className='flex h-full pr-[25rem] flex-grow items-center justify-center w-screen max-md:hidden'>
-                            <div className='text-gray-800 font-medium'>&larr; Select a person from sidebar</div>
+                        <div className='flex h-full bg-slate-800 pr-[25rem] flex-grow items-center justify-center w-screen max-md:hidden'>
+                            <div className='text-white font-medium'>&larr; Select a person from sidebar</div>
                         </div>
                     )}
                     {/* </div> */}
 
                     {!!selectedUserId && (
                         <div className='relative h-full max-md:w-screen'>
-                            <div className='overflow-y-scroll absolute inset-0 ml-4 max-sm:pt-12 pr-5'>
 
-                                <div className='sm:hidden items-center flex justify-between z-50  bg-blue-800 fixed top-0 left-0 right-0 bottom-0 h-10'>
+                            <div className=' overflow-y-scroll absolute inset-0 ml-4 max-sm:pt-12 pr-5'>
+                                {/* <div className='sm:hidden items-center flex justify-between z-50  bg-blue-800 fixed top-0 left-0 right-0 bottom-0 h-10'> */}
+                                <div className='sm:hidden items-center flex justify-between z-50  fixed top-0 left-0 right-0 bottom-0 h-10'>
                                     <button onClick={backClick} className=" font-mono font-semibold text-white text-left pl-4 ">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -351,7 +355,7 @@ export default function Chat() {
 
                                 {messagesWithoutDupes.map(message => (
                                     <div key={message._id} className={(message.sender === id ? 'text-right' : 'text-left')}>
-                                        <div className={"font-mono font-medium relative inline-block py-3  px-6 my-4 rounded-3xl text-[16px] cursor-text p-4 hover:bg-secondary order-1 rounded-br-none bg-primary " + (message.sender === id ? 'bg-blue-600 max-w-[64%] text-white' : 'bg-gray-700 text-white mb-2')}
+                                        <div className={"font-mono font-medium relative inline-block py-3  px-6 my-4 rounded-3xl text-[20px] cursor-text p-4 hover:bg-secondary order-1 rounded-br-none bg-primary " + (message.sender === id ? 'bg-green-700 max-w-[64%] text-white' : 'bg-gray-800 text-white mb-2')}
                                         >
                                             {message.text}
                                             <div className='h-[3px]'></div>
@@ -395,7 +399,7 @@ export default function Chat() {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
                             </svg>
                         </label>
-                        <button type='submit' className='bg-blue-500 p-2 text-white rounded-md mt-6'>
+                        <button type='submit' className='bg-green-800 p-3  text-white rounded-md mt-6'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
                             </svg>

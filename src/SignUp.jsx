@@ -315,11 +315,11 @@ const SignUp = ({ setIsLoggedIn }) => {
         }
       </Box>
       <div className='relative overflow-hidden  h-screen bg-[#000814]'>
-        <div className='top-[5rem]  pb-4 md:w-[30%] sm:w-[80%] w-[80%] flex justify-center items-center left-[2.5rem] md:left-[5rem] right-[5rem] absolute signin'>
+        <div className='top-[5rem] mx-auto  pb-4 md:w-[40%] sm:w-[80%] w-[80%] flex justify-center items-center left-[2.5rem] md:left-[5rem] right-[5rem] absolute signin'>
           <div className='content '>
             <form method='post' onSubmit={submitHandler} className='form flex  flex-col gap-5 text-white text-[18px]'>
               <div className='flex flex-col gap-3 xl:w-9/12 w-10/12 mx-auto mt-[1rem]'>
-                <div className='text-3xl mb-[1rem] text-yellow-400'>
+                <div className='font-style text-3xl mb-[1rem] text-yellow-400'>
                   <TypedText />
                 </div>
                 <div className='flex gap-2'>
@@ -425,18 +425,18 @@ const SignUp = ({ setIsLoggedIn }) => {
             </form>
           </div>
         </div>
-        <div className='md:w-[44vw] w-full overflow-hidden '>
+        <div className='w-full overflow-hidden '>
           <SignUpBackground />
         </div>
 
-        <div className='max-md:hidden flex justify-between'>
+        {/* <div className='max-md:hidden flex justify-between'>
           <div className='w-[50%]'></div>
           <div className='w-[50%] h-screen relative'>
             <video autoPlay muted loop className='h-full w-full object-fill'>
               <source src='https://cdn.pixabay.com/video/2021/10/01/90426-624025026_large.mp4' type='video/mp4' />
             </video>
           </div>
-        </div>
+        </div> */}
         
       </div>
     </div>

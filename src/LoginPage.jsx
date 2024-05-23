@@ -73,7 +73,7 @@ const SignUp = ({ setIsLoggedIn }) => {
                 }
             </Box>
             <div className='flex overflow-hidden h-screen bg-[#000814]'>
-                <div className='max-md:top-[5rem] top-[8rem] md:left-[5rem] left-[2.5rem] right-[5rem] pb-4 md:w-[30%] sm:w-[80%] w-[80%] flex justify-center items-center absolute signin'>
+                <div className='max-md:top-[5rem] top-[8rem] md:left-[5rem] left-[2.5rem] right-[5rem] pb-4 mx-auto md:w-[40%] sm:w-[80%] w-[80%] flex justify-center items-center absolute signin'>
                     <div className='content '>
                         <form method='post' onSubmit={submitHandler} className='form flex  flex-col gap-5 text-white text-[18px]'>
                             <div className='flex flex-col gap-3 xl:w-9/12 w-10/12 mx-auto mt-[2rem]'>
@@ -147,14 +147,14 @@ const SignUp = ({ setIsLoggedIn }) => {
                 <div className='md:w-[44vw] w-[100%] overflow-hidden '>
                     <SignUpBackground />
                 </div>
-                <div className='max-md:hidden flex justify-between'>
+                {/* <div className='max-md:hidden flex justify-between'>
                     <div className='w-[0%]'></div>
                     <div className='w-[76%] h-screen relative'>
                         <video autoPlay muted loop className='h-full w-full object-fill'>
                             <source src='https://cdn.pixabay.com/video/2021/10/01/90426-624025026_large.mp4' type='video/mp4' />
                         </video>
                     </div>
-                </div>
+                </div> */}
 
 
             </div>
