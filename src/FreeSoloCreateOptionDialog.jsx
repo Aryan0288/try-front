@@ -36,7 +36,7 @@ export default function FreeSolo() {
     // console.log("input box : ", textValue)
     return (
         <Stack spacing={2} sx={{ width: '90%', marginTop: "2rem", bgcolor: 'white', borderRadius: '14px', color: 'red' }}>
-            <Autocomplete
+            <Autocomplete 
                 freeSolo
                 id="free-solo-2-demo"
                 disableClearable
@@ -149,10 +149,10 @@ const top100Films = [
     { title: "mam", year: 2012 },
     { title: "sister", year: 1980 },
     { title: "brother", year: 2008 },
-    { title: 'American Beauty', year: 1999 },
-    { title: 'The Dark Knight Rises', year: 2012 },
-    { title: 'Princess Mononoke', year: 1997 },
-    { title: 'Aliens', year: 1986 },
+    { title: 'hlo', year: 1999 },
+    { title: 'kya lagta hai', year: 2012 },
+    { title: 'nhi aisa nhi hai', year: 1997 },
+    { title: 'hn bhai', year: 1986 },
     { title: 'Oldboy', year: 2003 },
     { title: 'Once Upon a Time in America', year: 1984 },
     { title: 'Witness for the Prosecution', year: 1957 },

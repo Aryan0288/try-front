@@ -31,8 +31,8 @@ export default function Chat() {
     }, [selectedUserId])
 
     function connectToWs() {
-        // const ws = new WebSocket('ws://localhost:4000');
-        const ws = new WebSocket('wss://try-backend-ouni.onrender.com');
+        const ws = new WebSocket('ws://localhost:4000');
+        // const ws = new WebSocket('wss://try-backend-ouni.onrender.com');
 
 
         setWs(ws);
@@ -115,8 +115,6 @@ export default function Chat() {
             //     setMessages(res.data);
             // });
 
-
-
             setMessages(prev => ([...prev, {
                 text: newMessageText,
                 sender: id,
@@ -139,7 +137,6 @@ export default function Chat() {
 
     // file send function
     function sendFile(ev) {
-        // console.log("sendFile: ", ev.target.files[0].name);
 
         const reader = new FileReader();
         reader.readAsDataURL(ev.target.files[0]);
@@ -197,7 +194,7 @@ export default function Chat() {
             setOfflinePeople(offlinePeople);
         });
     }, [onlinePeople]);
-
+    const [recipientUsername,setRecipientUsername]=useState("");
     useEffect(() => {
         if (selectedUserId) {
             // axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
@@ -206,9 +203,9 @@ export default function Chat() {
             // })
 
             // new code to fetch messages
-            // console.log(selectedUserId);
             axios.get('/messages/' + selectedUserId).then(res => {
-                setMessages(res.data);
+                setMessages(res.data.data);
+                setRecipientUsername(res.data.info[0].username);
             });
         }
     }, [selectedUserId, setMessages]);
@@ -217,6 +214,7 @@ export default function Chat() {
 
     delete onlinePeopleExclOurUser[id];
     const messagesWithoutDupes = uniqBy(messages, '_id');
+   
 
 
     const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -277,7 +275,6 @@ export default function Chat() {
                     {
                         Object.keys(onlinePeopleExclOurUser).filter((e) => e !== id).map(userId => (
                             <Contact
-
                                 key={userId}
                                 id={userId}
                                 online={true}
@@ -320,7 +317,6 @@ export default function Chat() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
                         </svg>
                         <button title='SignOut' className='text-md text-white md:text-xl font-medium lg:p-2'>Sign out &nbsp;</button>
-
                     </div>
                 </div>
             </div>
@@ -337,25 +333,25 @@ export default function Chat() {
                             <div className='text-white font-medium'>&larr; Select a person from sidebar</div>
                         </div>
                     )}
-                    {/* </div> */}
+                
 
                     {!!selectedUserId && (
-                        <div className='relative h-full max-md:w-screen'>
+                        <div className='relative h-full max-md:w-screen overflow-x-hidden'>
 
                             <div className=' overflow-y-scroll absolute inset-0 ml-4 max-sm:pt-12 pr-5'>
                                 {/* <div className='sm:hidden items-center flex justify-between z-50  bg-blue-800 fixed top-0 left-0 right-0 bottom-0 h-10'> */}
-                                <div className='sm:hidden items-center flex justify-between z-50  fixed top-0 left-0 right-0 bottom-0 h-10'>
+                                <div className='sm:hidden bg-green-400 pr-8 py-6 items-center flex justify-between z-50  fixed top-0 left-0 right-0 bottom-0 h-10'>
                                     <button onClick={backClick} className=" font-mono font-semibold text-white text-left pl-4 ">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                         </svg>
                                     </button>
-                                    <p className='font-mono font-semibold text-white pr-3 text-xl capitalize '>{username}</p>
+                                    <p className='font-mono font-semibold text-white pr-3 text-xl capitalize '>{recipientUsername}</p>
                                 </div>
 
                                 {messagesWithoutDupes.map(message => (
                                     <div key={message._id} className={(message.sender === id ? 'text-right' : 'text-left')}>
-                                        <div className={"font-mono font-medium relative inline-block py-3  px-6 my-4 rounded-3xl text-[20px] cursor-text p-4 hover:bg-secondary order-1 rounded-br-none bg-primary " + (message.sender === id ? 'bg-green-700 max-w-[64%] text-white' : 'bg-gray-800 text-white mb-2')}
+                                        <div className={"font-mono font-medium relative inline-block py-3  px-6 my-4 rounded-[2.2rem] text-[18px] cursor-text p-4 hover:bg-secondary order-1 rounded-br-none bg-primary " + (message.sender === id ? 'bg-green-700 max-w-[76%] text-white' : 'bg-gray-800 max-w-[76%] text-white mb-2')}
                                         >
                                             {message.text}
                                             <div className='h-[3px]'></div>
@@ -385,7 +381,7 @@ export default function Chat() {
 
 
                 {!!selectedUserId && (
-                    <form onSubmit={sendMessage} className='flex items-center gap-2 mx-2 p-2 pb-2'>
+                    <form onSubmit={sendMessage} className='flex flex-row items-center gap-2 mx-2 p-2 pb-2'>
                         <FreeSoloCreateOptionDialog />
                         {/* <input type='text'
                             value={newMessageText}

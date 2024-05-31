@@ -46,7 +46,7 @@ const SignUp = ({ setIsLoggedIn }) => {
                 position: "top-center"
             });
             setIsLoading(false);
-            navigate("/chat");
+            navigate("/");
         }
         catch (err) {
             setIsLoading(false);

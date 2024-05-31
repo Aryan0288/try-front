@@ -6,12 +6,20 @@ import Chat from './Chat.jsx';
 import LoginPage from './LoginPage.jsx'
 import { Route, Routes } from 'react-router-dom';
 import OTPVerification from './Components/otpVerification.jsx';
+import axios from 'axios';
 
 export default function RoutesPath() {
-  console.log("I am in route file");
-  const [tokenPresent,setTokenPresent]=useState();
+  const [tokenPresent, setTokenPresent] = useState();
 
 
+  const { username } = useContext(UserContext);
+  
+
+  if (username) {
+    return (
+      <Chat />
+    )
+  }
 
 
   return (
@@ -25,7 +33,7 @@ export default function RoutesPath() {
       <Routes>
         <Route path="/" element={<SignUp />} />
         <Route path="/Login" element={<LoginPage />} />
-        <Route path="/chat" element={<Chat />} />
+        {/* <Route path="/chat" element={<Chat />} /> */}
         <Route path="/otpVerification" element={<OTPVerification />} />
       </Routes>
     </div>

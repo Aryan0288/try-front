@@ -5,7 +5,8 @@
 
 .signin {
     position: absolute;
-    background: #222;
+    /* background: #222; */
+    background: #323232;
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -43,7 +44,8 @@
 {
   position: relative;
   width: 100%;
-  background: #333;
+  /* background: #333; */
+  background: #484848;
   border: none;
   outline: none;
   padding: 25px 10px 7.5px;

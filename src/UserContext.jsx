@@ -14,25 +14,30 @@ export function UserContextProvider({ children }) {
    
 
     // profile fetch function
-    const fetchProfile = async () => {
-        try { 
-            const res=localStorage.getItem("token");
-            const response=JSON.parse(res);
-            // console.log("id : ", response.id);
-            // console.log("username : ", response.username);
-            // console.log("email : ", response.email);    
+    // const fetchProfile = async () => {
+    //     try { 
+    //         const res=localStorage.getItem("token");
+    //         const response=JSON.parse(res);
+    //         setId(response.id);
+    //         setUsername(response.username);
+    //         setEmail(response.email);
+    //         return;
+    //     } catch (err) {
+    //         console.log("error Occur during fetch profile data : ", err.message);
+    //         return;
+    //     }
+    // }
+    // useEffect(() => {
+    //     fetchProfile();
+    // }, [])
 
-            setId(response.id);
-            setUsername(response.username);
-            setEmail(response.email);
-            return;
-        } catch (err) {
-            console.log("error Occur during fetch profile data : ", err.message);
-            return;
-        }
-    }
+
     useEffect(() => {
-        fetchProfile();
+        axios.get('./profile').then(response => {
+            setId(response.data.id);
+            setUsername(response.data.username);
+            setEmail(response.data.email);
+        });
     }, [])
 
     const value = {
