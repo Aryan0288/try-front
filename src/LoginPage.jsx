@@ -10,6 +10,8 @@ import LinearProgress from '@mui/material/LinearProgress';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
+import './Components/btns/button.css';
+
 
 import './SignUp.css'
 import SignUpBackground from './Components/SignUpBackground';
@@ -21,10 +23,11 @@ const SignUp = ({ setIsLoggedIn }) => {
     const { setUsername: setLoggedInUsername, setId, setEmail: setLoggedEmail } = useContext(UserContext);
     const [pass, setpass] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [clicked, setClicked] = useState(false);
 
     async function submitHandler(event) {
         setIsLoading(true);
+        setClicked(true);
         // console.log("login Page");
         event.preventDefault();
         try {
@@ -46,9 +49,11 @@ const SignUp = ({ setIsLoggedIn }) => {
                 position: "top-center"
             });
             setIsLoading(false);
+            setClicked(false);
             navigate("/");
         }
         catch (err) {
+            setClicked(false);
             setIsLoading(false);
             console.log("i am in err " + err);
             if (err.message.includes("401")) {
@@ -86,11 +91,10 @@ const SignUp = ({ setIsLoggedIn }) => {
                                     <label className='inputBox w-full'>
                                         <input
                                             className='txt-font p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
-                                            required
                                             type='text'
                                             name='username'
                                             onChange={(e) => setUsername(e.target.value)}
-
+                                            required
                                             value={username}
                                             autoComplete='new-name'
                                         />
@@ -118,17 +122,30 @@ const SignUp = ({ setIsLoggedIn }) => {
                                     <i>Password</i>
                                 </label>
 
+                                <Link to="/passwordreset">
+                                    <div className=' cursor-pointer text-right text-yellow-300 font-medium '>
+                                        <button className='h2'>Forget Password</button>
+                                    </div>
+                                </Link>
 
 
 
-                                {/* </div> */}
+                                <div className=''>
 
-
-                                <div className='mt-2'>
-
-                                    <button className='w-full py-2 rounded-md text-black bg-yellow-400 font-semibold'>
-                                        Sign In
+                                    <button disabled={clicked} className={`${clicked && ""} w-full py-2 rounded-md text-black  font-semibold `}>
+                                        <nav>
+                                            <ul>
+                                                <li>
+                                                    Sign In
+                                                    <span></span><span></span><span></span><span></span>
+                                                </li>
+                                            </ul>
+                                        </nav>
                                     </button>
+
+                                    {/* <button disabled={clicked} className={`${clicked && "bg-yellow-300"} w-full py-2 rounded-md text-black bg-yellow-400 font-semibold hover:shadow-md hover:shadow-yellow-600 hover:transition-all duration-200 `}>
+                                        Sign In
+                                    </button> */}
                                 </div>
                             </div>
 
@@ -147,14 +164,7 @@ const SignUp = ({ setIsLoggedIn }) => {
                 <div className='md:w-[44vw] w-[100%] overflow-hidden '>
                     <SignUpBackground />
                 </div>
-                {/* <div className='max-md:hidden flex justify-between'>
-                    <div className='w-[0%]'></div>
-                    <div className='w-[76%] h-screen relative'>
-                        <video autoPlay muted loop className='h-full w-full object-fill'>
-                            <source src='https://cdn.pixabay.com/video/2021/10/01/90426-624025026_large.mp4' type='video/mp4' />
-                        </video>
-                    </div>
-                </div> */}
+
 
 
             </div>

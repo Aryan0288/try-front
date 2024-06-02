@@ -31,8 +31,8 @@ export default function Chat() {
     }, [selectedUserId])
 
     function connectToWs() {
-        // const ws = new WebSocket('ws://localhost:4000');
-        const ws = new WebSocket('wss://try-backend-ouni.onrender.com');
+        const ws = new WebSocket('ws://localhost:4000');
+        // const ws = new WebSocket('wss://try-backend-ouni.onrender.com');
 
 
         setWs(ws);
@@ -194,7 +194,7 @@ export default function Chat() {
             setOfflinePeople(offlinePeople);
         });
     }, [onlinePeople]);
-    const [recipientUsername,setRecipientUsername]=useState("");
+    const [recipientUsername, setRecipientUsername] = useState("");
     useEffect(() => {
         if (selectedUserId) {
             // axios.get('/messages/' + selectedUserId + "/" + id).then(res => {
@@ -214,7 +214,7 @@ export default function Chat() {
 
     delete onlinePeopleExclOurUser[id];
     const messagesWithoutDupes = uniqBy(messages, '_id');
-   
+
 
 
     const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -333,7 +333,7 @@ export default function Chat() {
                             <div className='text-white font-medium'>&larr; Select a person from sidebar</div>
                         </div>
                     )}
-                
+
 
                     {!!selectedUserId && (
                         <div className='relative h-full max-md:w-screen overflow-x-hidden'>
@@ -383,13 +383,7 @@ export default function Chat() {
                 {!!selectedUserId && (
                     <form onSubmit={sendMessage} className='flex flex-row items-center gap-2 mx-2 p-2 pb-2'>
                         <FreeSoloCreateOptionDialog />
-                        {/* <input type='text'
-                            value={newMessageText}
-                            onChange={ev => setNewMessageText(ev.target.value)}
-                            placeholder='type your message here'
-                            className='bg-white flex-grow border p-2 rounded-md'
-                        /> */}
-                        <label className='cursor-pointer pt-6'>
+                        <label className='relative cursor-pointer pb-4'>
                             <input type='file' className='hidden' onChange={sendFile} />
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />

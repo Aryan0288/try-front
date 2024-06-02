@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 *
 {
   margin: 0;
@@ -6,18 +6,10 @@
   box-sizing: border-box;
   font-family: 'Quicksand', sans-serif;
 }
-/* body 
-{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: #000;
-} */
+
 section 
 {
   position: absolute;
-  /* width: 50vw; */
   width: 100%;
   height: 100vh;
   display: flex;
@@ -40,7 +32,7 @@ section::before
   position: absolute;
   width: 100%;
   height: 100%;
-  /* background: linear-gradient(#000,#0f0,#000); */
+  
   background: linear-gradient(#000,rgb(255, 251, 0),#000);
   animation: animate 5s linear infinite;
 }
@@ -67,7 +59,7 @@ section span
 }
 section span:hover 
 {
-  /* background: #0f0; */
+  
   background: rgb(251, 251, 0);
   transition: 0s;
 }
@@ -189,4 +181,4 @@ input[type="submit"]:active
     width: calc(20vw - 2px);
     height: calc(20vw - 2px);
   }
-}
+} */

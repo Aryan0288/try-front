@@ -246,13 +246,14 @@ import Grid from '@mui/material/Grid';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SignUpBackground from './Components/SignUpBackground'
- 
+import './Components/btns/button.css'
+
 // import dotenv from 'dotenv'
 // dotenv.config();
 
 
 const SignUp = ({ setIsLoggedIn }) => {
-  const navigation = useNavigate();
+  const navigation = useNavigate(); 
   const [username, setName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -263,7 +264,7 @@ const SignUp = ({ setIsLoggedIn }) => {
 
   const [pass, setpass] = useState(false);
   const [pass1, setpass1] = useState(false);
-
+  const [clicked, setClicked] = useState(false);
 
 
   async function submitHandler(event) {
@@ -276,6 +277,7 @@ const SignUp = ({ setIsLoggedIn }) => {
 
     try {
       setIsLoading(true);
+      setClicked(true);
 
       // then signUp the new User
 
@@ -290,10 +292,12 @@ const SignUp = ({ setIsLoggedIn }) => {
 
       localStorage.setItem("temp", JSON.stringify(LsData));
       setIsLoading(false);
+      setClicked(false);
       navigation("/otpVerification");
 
     }
     catch (err) {
+      setClicked(false);
       setIsLoading(false);
       console.log("err ", err.message);
       if (err.message.includes("401")) {
@@ -328,11 +332,10 @@ const SignUp = ({ setIsLoggedIn }) => {
                     {/* <p>Username <sup className='text-red-500 text-[14px] font-bold'>*</sup></p> */}
                     <input
                       className='txt-font p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
-                      required
                       type='text'
                       name='username'
                       onChange={(e) => setName(e.target.value)}
-                      // placeholder='UserName'
+                      required
                       value={username}
                       autoComplete='new-name'
                     />
@@ -347,10 +350,10 @@ const SignUp = ({ setIsLoggedIn }) => {
 
                     <input
                       className='txt-font p-2 mt-1 rounded-md border-b-2 border-b-slate-700 outline-[0.5px] w-full bg-slate-700/90'
-                      required
                       type='email'
                       name='email'
                       onChange={e => setEmail(e.target.value)}
+                      required
                       value={email}
                       autoComplete='new-email'
                     />
@@ -386,7 +389,6 @@ const SignUp = ({ setIsLoggedIn }) => {
                     type={pass1 ? ('text') : ('password')}
                     name='confirmPassword'
                     value={confirmPassword}
-                    // placeholder='Password'
                     required
                     onChange={e => setconfirmPassword(e.target.value)}
                   />
@@ -403,9 +405,19 @@ const SignUp = ({ setIsLoggedIn }) => {
 
                 <div className='mt-2'>
 
-                  <button className='w-full py-2 rounded-md text-black bg-yellow-400 font-semibold'>
-                    Create Account
+                  <button disabled={clicked} className={`${clicked && ""} w-full py-2 rounded-md text-black  font-semibold `}>
+                    <nav>
+                      <ul>
+                        <li>
+                          Sign Up
+                          <span></span><span></span><span></span><span></span>
+                        </li>
+                      </ul>
+                    </nav>
                   </button>
+                  {/* <button disabled={clicked} className={`${clicked && "bg-yellow-300"} w-full py-2 rounded-md text-black bg-yellow-400 font-semibold hover:shadow-md hover:shadow-yellow-600 hover:transition-all duration-200 `}>
+                    Create Account
+                  </button> */}
                 </div>
               </div>
 
@@ -415,7 +427,7 @@ const SignUp = ({ setIsLoggedIn }) => {
                 <div>
                   Already a member?
                   <Link to={"/Login"}>
-                    < button>&nbsp; Login here</button>
+                    < button >&nbsp; Login here</button>
                   </Link>
                 </div>
 
@@ -437,7 +449,7 @@ const SignUp = ({ setIsLoggedIn }) => {
             </video>
           </div>
         </div> */}
-        
+
       </div>
     </div>
   )
