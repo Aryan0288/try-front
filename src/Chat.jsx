@@ -31,8 +31,8 @@ export default function Chat() {
     }, [selectedUserId])
 
     function connectToWs() {
-        const ws = new WebSocket('ws://localhost:4000');
-        // const ws = new WebSocket('wss://try-backend-ouni.onrender.com');
+        // const ws = new WebSocket('ws://localhost:4000');
+        const ws = new WebSocket('wss://try-backend-ouni.onrender.com');
 
 
         setWs(ws);
