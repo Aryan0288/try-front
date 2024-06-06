@@ -75,7 +75,7 @@ body {
 
 .container {
   background: #fff;
-  padding: 30px 65px;
+  padding: 3rem 2rem;
   border-radius: 12px;
   row-gap: 20px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -128,7 +128,6 @@ form .btn {
   padding: 9px 0;
   cursor: pointer;
   border-radius: 6px;
-  pointer-events: none;
   background: #6e93f7;
   transition: all 0.2s ease;
 }

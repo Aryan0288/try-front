@@ -96,8 +96,15 @@ export default function Login1() {
                                         required
                                         onChange={e => setPassword(e.target.value)}
                                     />
+
+                                </div>
+                                <div className='text-right'>
+                                    <Link to="/forgetpassword">
+                                        <button style={{color:"#3b4998"}} className='forget'>Forget Password</button>
+                                    </Link>
                                 </div>
                                 <div class="form-group">
+
                                     <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
                                 </div>
                                 <div class="form-group form-button">

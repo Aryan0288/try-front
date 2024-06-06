@@ -10,6 +10,8 @@ import axios from 'axios';
 import PasswordReset from './Components/Pages/PasswordReset.jsx'
 import SignUp1 from './newPages/SignUpPages/SignUp1.jsx';
 import Login1 from './newPages/SignUpPages/Login1.jsx';
+import { ForgetPassword } from './newPages/ForgetPassword/ForgetPassword.jsx';
+import ResetPassword from './newPages/ForgetPassword/ResetPassword.jsx';
 
 export default function RoutesPath() {
   const [tokenPresent, setTokenPresent] = useState();
@@ -38,7 +40,8 @@ export default function RoutesPath() {
         <Route path="/Login" element={<Login1/>}/>
         {/* <Route path="/" element={<SignUp />} />
         <Route path="/Login" element={<LoginPage />} /> */}
-        <Route path="/passwordreset" element={<PasswordReset />} />
+        <Route path="/forgetpassword" element={<ForgetPassword />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/otpVerification" element={<OTPVerification />} />
       </Routes>
     </div>

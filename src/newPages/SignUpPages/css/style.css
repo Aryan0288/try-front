@@ -403,7 +403,10 @@ figure {
   gap: 5px;
   align-items: center;
 }
-
+.forget{
+  text-align: right;
+  margin-left: 5rem;
+}
 .form-group:last-child {
   margin-bottom: 0px;
   margin-top: 25px;
